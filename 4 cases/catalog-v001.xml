@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-    <uri id="MAon-DAExt" name="https://example.org/sample/ontology/maon-daext" uri="https://example.org/sample/ontology/maon-daext"/>
-    <uri id="MAon" name="https://purl.org/maont/ontology/" uri="https://purl.org/maont/ontology/"/>
-</catalog>
