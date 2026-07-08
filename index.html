@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MAon-DAExt → Linked Art Converter</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+  /* ── Reset & base ─────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    background: #f3f4f6;
+    color: #1f2937;
+    min-height: 100vh;
+  }
+
+  /* ── Layout ───────────────────────────────────── */
+  .shell { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+
+  /* ── Sidebar ──────────────────────────────────── */
+  .sidebar {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 28px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar h1 { font-size: 15px; font-weight: 700; color: #f1f5f9; line-height: 1.4; }
+  .sidebar .tagline { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+  .sidebar hr { border: none; border-top: 1px solid #334155; }
+
+  .steps-heading { font-size: 11px; font-weight: 700; text-transform: uppercase;
+                   letter-spacing: .06em; color: #64748b; }
+  .step {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 10px 12px; border-radius: 8px;
+    transition: background .15s;
+  }
+  .step.active { background: #334155; }
+  .step-num {
+    min-width: 22px; height: 22px; border-radius: 50%;
+    background: #475569; color: #f1f5f9;
+    font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step.active .step-num { background: #6366f1; }
+  .step-body { display: flex; flex-direction: column; gap: 2px; }
+  .step-title { font-size: 12px; font-weight: 600; color: #e2e8f0; }
+  .step-desc  { font-size: 11px; color: #94a3b8; line-height: 1.45; }
+
+  /* ── Main content ─────────────────────────────── */
+  .main { padding: 32px 36px; display: flex; flex-direction: column; gap: 24px; min-width: 0; overflow-x: hidden; }
+
+  /* ── Cards ────────────────────────────────────── */
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 22px 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  }
+  .card-title {
+    font-size: 13px; font-weight: 700; color: #374151;
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 14px;
+  }
+  .badge {
+    display: inline-flex; align-items: center;
+    background: #ede9fe; color: #6d28d9;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 99px; letter-spacing:.03em;
+  }
+
+  /* ── Textarea ─────────────────────────────────── */
+  textarea {
+    width: 100%; border: 1px solid #d1d5db; border-radius: 8px;
+    padding: 12px 14px; font-family: "Fira Code", "Cascadia Code", monospace;
+    font-size: 12px; line-height: 1.55; resize: vertical;
+    background: #f9fafb; color: #111827;
+    transition: border-color .15s, box-shadow .15s;
+    outline: none;
+  }
+  textarea:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,.15); }
+
+  /* ── File drop zone ───────────────────────────── */
+  .drop-zone {
+    border: 2px dashed #d1d5db; border-radius: 8px;
+    padding: 20px; text-align: center; color: #6b7280;
+    cursor: pointer; transition: all .2s; margin-bottom: 12px;
+    font-size: 12px;
+  }
+  .drop-zone:hover, .drop-zone.over { border-color: #6366f1; background: #eef2ff; color: #6366f1; }
+  .drop-zone input[type=file] { display: none; }
+
+  /* ── Buttons ──────────────────────────────────── */
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  button {
+    border: none; border-radius: 7px; padding: 8px 18px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: all .15s;
+  }
+  .btn-primary { background: #6366f1; color: #fff; }
+  .btn-primary:hover:not(:disabled) { background: #4f46e5; }
+  .btn-secondary { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; }
+  .btn-secondary:hover:not(:disabled) { background: #e5e7eb; }
+  .btn-success { background: #10b981; color: #fff; }
+  .btn-success:hover:not(:disabled) { background: #059669; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+
+  /* ── Agent table ──────────────────────────────── */
+  #agent-section { display: none; }
+  .agent-table { width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; }
+  .agent-table th {
+    text-align: left; padding: 8px 12px;
+    background: #f9fafb; border-bottom: 2px solid #e5e7eb;
+    font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing:.04em;
+  }
+  .agent-table td { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; overflow: hidden; }
+  .agent-table col.col-label { width: 28%; }
+  .agent-table col.col-uri   { width: 52%; }
+  .agent-table col.col-type  { width: 20%; }
+  .agent-table tr:hover td { background: #fafafa; }
+  .agent-uri { color: #6b7280; font-family: monospace; font-size: 11px;
+               white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+
+  .toggle-group { display: flex; border-radius: 6px; overflow: hidden; border: 1px solid #d1d5db; }
+  .toggle-group label {
+    padding: 4px 10px; font-size: 11px; font-weight: 600; cursor: pointer;
+    background: #f9fafb; color: #6b7280;
+    transition: all .12s; user-select: none;
+  }
+  .toggle-group input[type=radio] { display: none; }
+  .toggle-group input[type=radio]:checked + label.person-label {
+    background: #dbeafe; color: #1d4ed8;
+  }
+  .toggle-group input[type=radio]:checked + label.group-label {
+    background: #fef3c7; color: #b45309;
+  }
+
+  /* ── Status / error bar ───────────────────────── */
+  .status-bar {
+    padding: 10px 14px; border-radius: 8px; font-size: 12px;
+    display: none; align-items: center; gap: 8px;
+  }
+  .status-bar.info  { background: #eff6ff; color: #1d4ed8; display: flex; }
+  .status-bar.ok    { background: #ecfdf5; color: #065f46; display: flex; }
+  .status-bar.error { background: #fef2f2; color: #991b1b; display: flex; }
+  .spinner {
+    width: 14px; height: 14px; border: 2px solid currentColor;
+    border-top-color: transparent; border-radius: 50%;
+    animation: spin .7s linear infinite; flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Results ──────────────────────────────────── */
+  #results-section { display: none; }
+  .results-toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
+  }
+  .results-count { font-size: 12px; color: #6b7280; }
+
+  .tab-bar {
+    display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 16px;
+  }
+  .tab-btn {
+    padding: 5px 12px; border-radius: 6px; border: 1px solid #e5e7eb;
+    background: #f9fafb; color: #6b7280; font-size: 11px; font-weight: 600;
+    cursor: pointer; transition: all .12s;
+  }
+  .tab-btn.active { background: #6366f1; color: #fff; border-color: #6366f1; }
+  .tab-btn:hover:not(.active) { background: #e5e7eb; }
+
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  .record-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 8px; gap: 8px; flex-wrap: wrap;
+  }
+  .record-id { font-size: 11px; color: #6b7280; font-family: monospace; word-break: break-all; }
+  .type-chip {
+    padding: 2px 8px; border-radius: 99px; font-size: 10px; font-weight: 700;
+    background: #e0e7ff; color: #4338ca; white-space: nowrap;
+  }
+  pre {
+    background: #0f172a; color: #e2e8f0; border-radius: 8px;
+    padding: 16px; font-family: "Fira Code","Cascadia Code",monospace;
+    font-size: 11.5px; line-height: 1.6; overflow-x: auto;
+    max-height: 420px; overflow-y: auto;
+  }
+  .dl-btn { font-size: 11px; padding: 5px 12px; }
+
+  /* ── Mapping reference table ──────────────────── */
+  details { margin-top: 8px; }
+  summary { cursor: pointer; font-size: 12px; font-weight: 600; color: #6366f1; user-select: none; }
+  .mapping-wrap { overflow-x: auto; }
+  .mapping-table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 10px; table-layout: fixed; min-width: 520px; }
+  .mapping-table col.col-ttl  { width: 34%; }
+  .mapping-table col.col-la   { width: 33%; }
+  .mapping-table col.col-note { width: 33%; }
+  .mapping-table th {
+    background: #f9fafb; text-align: left; padding: 6px 10px;
+    border-bottom: 2px solid #e5e7eb;
+    font-size: 11px; font-weight: 700; color: #6b7280;
+  }
+  .mapping-table td { padding: 6px 10px; border-bottom: 1px solid #f3f4f6; word-break: break-word; }
+  .mapping-table code { background: #f3f4f6; padding: 1px 4px; border-radius: 3px; font-size: 11px; }
+  .mapping-table tr:hover td { background: #fafafa; }
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ──────────── SIDEBAR ──────────── -->
+<aside class="sidebar">
+  <div>
+    <h1>MAon-DAExt → Linked Art</h1>
+    <div class="tagline">MAon-DAExt TTL converter</div>
+  </div>
+  <hr />
+  <div class="steps-heading">Workflow</div>
+
+  <div class="step active" id="step-1-indicator">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <div class="step-title">Paste or upload TTL</div>
+      <div class="step-desc">Provide your ontology instance file in Turtle format.</div>
+    </div>
+  </div>
+
+  <div class="step" id="step-2-indicator">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <div class="step-title">Review agent types</div>
+      <div class="step-desc">Confirm whether each <code style="color:#94a3b8">hda:Agent</code> is a Person or Group. Auto-detected from name heuristics.</div>
+    </div>
+  </div>
+
+  <div class="step" id="step-3-indicator">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <div class="step-title">Convert &amp; download</div>
+      <div class="step-desc">One JSON-LD file per resource, or all as a ZIP. Compatible with the Linked Art v1 context.</div>
+    </div>
+  </div>
+
+  <hr />
+  <div style="font-size:11px;color:#64748b;line-height:1.6">
+    <strong style="color:#94a3b8">Supported classes</strong><br/>
+    Digital_Archive → <em>Set</em><br/>
+    Exhibition → <em>Event</em><br/>
+    Instructional_video, MoCap_animation,<br/>
+    MoCap_item, Interactive_system,<br/>
+    Digital_Learning_Platform → <em>DigitalObject</em><br/>
+    Programme → <em>Activity</em><br/>
+    Agent → <em>Person / Group</em><br/>
+    MA_Master → <em>Person</em><br/>
+    E53_place → <em>Place</em>
+  </div>
+</aside>
+
+<!-- ──────────── MAIN ──────────── -->
+<main class="main">
+
+  <!-- Step 1: TTL input -->
+  <div class="card" id="input-card">
+    <div class="card-title">
+      <span>① TTL Input</span>
+      <span class="badge">Step 1</span>
+    </div>
+
+    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+      <input type="file" id="file-input" accept=".ttl,.n3,.rdf" />
+      <strong>Click to upload</strong> a .ttl file, or drag &amp; drop it here
+    </div>
+
+    <textarea id="ttl-input" rows="14"
+      placeholder="@prefix hda: <https://example.org/sample/ontology/maon-daext#> .
+@prefix mao: <https://purl.org/maont/ontology/> .
+...paste your Turtle instance file here..."></textarea>
+
+    <div class="btn-row">
+      <button class="btn-primary" id="btn-analyze">
+        <span>Analyse Agents →</span>
+      </button>
+      <button class="btn-secondary" id="btn-clear">Clear</button>
+    </div>
+  </div>
+
+  <!-- Status bar -->
+  <div class="status-bar" id="status-bar">
+    <div class="spinner" id="spinner" style="display:none"></div>
+    <span id="status-msg"></span>
+  </div>
+
+  <!-- Step 2: Agent review -->
+  <div class="card" id="agent-section">
+    <div class="card-title">
+      <span>② Review Agent Types</span>
+      <span class="badge">Step 2</span>
+    </div>
+    <p style="font-size:12px;color:#6b7280;margin-bottom:14px">
+      Auto-detected from name heuristics. Toggle any misclassified agents before converting.
+    </p>
+    <table class="agent-table" id="agent-table">
+      <colgroup>
+        <col class="col-label" /><col class="col-uri" /><col class="col-type" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Label</th>
+          <th>URI</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody id="agent-tbody"></tbody>
+    </table>
+    <div class="btn-row" style="margin-top:16px">
+      <button class="btn-success" id="btn-convert">
+        <span>⚡ Convert to Linked Art</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Step 3: Results -->
+  <div class="card" id="results-section">
+    <div class="card-title">
+      <span>③ Linked Art JSON-LD Output</span>
+      <span class="badge">Step 3</span>
+    </div>
+
+    <div class="results-toolbar">
+      <span class="results-count" id="results-count"></span>
+      <div class="btn-row" style="margin:0">
+        <button class="btn-secondary dl-btn" id="btn-dl-jsonl">↓ All as JSONL</button>
+        <button class="btn-primary dl-btn" id="btn-dl-zip">↓ All as ZIP</button>
+      </div>
+    </div>
+
+    <div class="tab-bar" id="tab-bar"></div>
+    <div id="tab-content"></div>
+  </div>
+
+  <!-- Reference mapping table -->
+  <div class="card">
+    <div class="card-title">Mapping Reference</div>
+    <details>
+      <summary>Show full class &amp; property mapping table</summary>
+      <div class="mapping-wrap">
+      <table class="mapping-table" style="margin-top:12px">
+        <colgroup>
+          <col class="col-ttl" /><col class="col-la" /><col class="col-note" />
+        </colgroup>
+        <thead><tr><th>TTL class / property</th><th>Linked Art equivalent</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>hda:Digital_Archive</code></td><td><code>"type": "Set"</code></td><td>Archive as a collection</td></tr>
+          <tr><td><code>hda:Exhibition</code></td><td><code>"type": "Event"</code></td><td>+ AAT <em>exhibitions</em></td></tr>
+          <tr><td><code>hda:Instructional_video</code></td><td><code>"type": "DigitalObject"</code></td><td>classified_as Instructional_video</td></tr>
+          <tr><td><code>hda:MoCap_animation</code></td><td><code>"type": "DigitalObject"</code></td><td></td></tr>
+          <tr><td><code>hda:MoCap_item</code></td><td><code>"type": "DigitalObject"</code></td><td></td></tr>
+          <tr><td><code>hda:Interactive_system</code></td><td><code>"type": "DigitalObject"</code></td><td></td></tr>
+          <tr><td><code>hda:Digital_Learning_Platform</code></td><td><code>"type": "DigitalObject"</code></td><td></td></tr>
+          <tr><td><code>hda:Programme</code></td><td><code>"type": "Activity"</code></td><td></td></tr>
+          <tr><td><code>hda:Agent</code></td><td><code>"type": "Person" | "Group"</code></td><td>Heuristic + UI override</td></tr>
+          <tr><td><code>mao:MA_Master</code></td><td><code>"type": "Person"</code></td><td></td></tr>
+          <tr><td><code>mao:E53_place</code></td><td><code>"type": "Place"</code></td><td></td></tr>
+          <tr><td colspan="3" style="background:#f9fafb;font-weight:700;padding-top:10px">Properties</td></tr>
+          <tr><td><code>hda:hasTitle</code>, <code>mao:name_en/zh</code></td><td><code>identified_by</code> (Name)</td><td></td></tr>
+          <tr><td><code>hda:hasDescription</code></td><td><code>referred_to_by</code> (Description)</td><td>AAT 300435416</td></tr>
+          <tr><td><code>hda:hasAccessURL</code></td><td><code>access_point</code> or <code>subject_of</code></td><td>By class context</td></tr>
+          <tr><td><code>hda:memberOfArchive</code></td><td><code>member_of</code> (Set)</td><td></td></tr>
+          <tr><td><code>hda:hasCollaborator</code></td><td><code>created_by.carried_out_by</code> or <code>carried_out_by</code></td><td>Archive / Exhibition</td></tr>
+          <tr><td><code>hda:hasCurator</code></td><td><code>carried_out_by</code> (Person)</td><td></td></tr>
+          <tr><td><code>hda:hasOrganizer</code></td><td><code>carried_out_by</code> (Group)</td><td></td></tr>
+          <tr><td><code>hda:hasArtist</code></td><td><code>created_by.carried_out_by</code> (Person)</td><td></td></tr>
+          <tr><td><code>hda:createdBy</code></td><td><code>created_by.carried_out_by</code> (Person)</td><td></td></tr>
+          <tr><td><code>hda:derivedFrom</code></td><td><code>created_by.referred_to_by</code> (Note)</td><td></td></tr>
+          <tr><td><code>hda:hasStartDate</code></td><td><code>timespan.begin_of_the_begin</code></td><td></td></tr>
+          <tr><td><code>hda:hasEndDate</code></td><td><code>timespan.end_of_the_end</code></td><td></td></tr>
+          <tr><td><code>hda:hasVenuePlace</code></td><td><code>took_place_at</code> (Place)</td><td></td></tr>
+          <tr><td><code>hda:shownAt</code></td><td><code>used_for</code> (Activity, AAT exhibitions)</td><td></td></tr>
+          <tr><td><code>hda:present_at</code></td><td><code>used_for</code> (Activity, Note)</td><td></td></tr>
+          <tr><td><code>hda:associatedWith</code></td><td><code>part_of</code> or <code>used_for</code></td><td>By target class</td></tr>
+          <tr><td><code>hda:usesDigitalFile</code></td><td><code>referred_to_by</code> (Note)</td><td></td></tr>
+          <tr><td><code>hda:references</code></td><td><code>referred_to_by</code> (Note)</td><td></td></tr>
+          <tr><td><code>hda:hasDuration</code>, <code>hda:hasFrameRate</code></td><td><code>referred_to_by</code> (Note)</td><td>Technical metadata</td></tr>
+          <tr><td><code>hda:documentsStyle/Technique</code>, <code>hda:featuresMaster</code></td><td>Auto-generated description</td><td></td></tr>
+          <tr><td><code>dcterms:created</code></td><td><code>created_by.timespan</code></td><td></td></tr>
+        </tbody>
+      </table>
+      </div>
+    </details>
+  </div>
+
+</main>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────
+let currentTTL = "";
+let currentAgents = [];    // [{uri, label, auto_type}]
+let currentRecords = [];   // full JSON-LD records
+
+// ── Helpers ────────────────────────────────────────────────────
+function setStatus(type, html, showSpinner = false) {
+  const bar = document.getElementById("status-bar");
+  bar.className = `status-bar ${type}`;
+  document.getElementById("spinner").style.display = showSpinner ? "block" : "none";
+  document.getElementById("status-msg").innerHTML = html;
+}
+function hideStatus() {
+  document.getElementById("status-bar").className = "status-bar";
+}
+function setStep(n) {
+  [1,2,3].forEach(i => {
+    document.getElementById(`step-${i}-indicator`).classList.toggle("active", i === n);
+  });
+}
+
+// ── File upload / drag-drop ────────────────────────────────────
+const dropZone = document.getElementById("drop-zone");
+const fileInput = document.getElementById("file-input");
+
+dropZone.addEventListener("dragover", e => { e.preventDefault(); dropZone.classList.add("over"); });
+dropZone.addEventListener("dragleave", () => dropZone.classList.remove("over"));
+dropZone.addEventListener("drop", e => {
+  e.preventDefault(); dropZone.classList.remove("over");
+  const file = e.dataTransfer.files[0];
+  if (file) loadFile(file);
+});
+fileInput.addEventListener("change", () => {
+  if (fileInput.files[0]) loadFile(fileInput.files[0]);
+});
+
+function loadFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById("ttl-input").value = e.target.result;
+    dropZone.innerHTML = `<strong>${file.name}</strong> loaded ✓`;
+  };
+  reader.readAsText(file);
+}
+
+// ── Step 1: Analyse agents ─────────────────────────────────────
+document.getElementById("btn-analyze").addEventListener("click", analyzeAgents);
+document.getElementById("btn-clear").addEventListener("click", () => {
+  document.getElementById("ttl-input").value = "";
+  document.getElementById("agent-section").style.display = "none";
+  document.getElementById("results-section").style.display = "none";
+  dropZone.innerHTML = `<strong>Click to upload</strong> a .ttl file, or drag &amp; drop it here`;
+  hideStatus();
+  setStep(1);
+});
+
+async function analyzeAgents() {
+  const ttl = document.getElementById("ttl-input").value.trim();
+  if (!ttl) { setStatus("error", "Please paste a TTL file first."); return; }
+  currentTTL = ttl;
+
+  setStatus("info", "Parsing TTL…", true);
+  document.getElementById("btn-analyze").disabled = true;
+
+  try {
+    const res = await fetch("/preview", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ttl }),
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error);
+
+    currentAgents = data.agents;
+    renderAgentTable(currentAgents);
+    document.getElementById("agent-section").style.display = "block";
+    document.getElementById("results-section").style.display = "none";
+    setStatus("ok", `✓ Found ${currentAgents.length} agent(s). Review types below, then click Convert.`);
+    setStep(2);
+  } catch (err) {
+    setStatus("error", `Error: ${err.message}`);
+  } finally {
+    document.getElementById("btn-analyze").disabled = false;
+  }
+}
+
+function renderAgentTable(agents) {
+  const tbody = document.getElementById("agent-tbody");
+  tbody.innerHTML = "";
+  agents.forEach((ag, i) => {
+    const tr = document.createElement("tr");
+    const isPerson = ag.auto_type === "Person";
+    tr.innerHTML = `
+      <td style="font-weight:600">${escHtml(ag.label)}</td>
+      <td class="agent-uri">${escHtml(ag.uri)}</td>
+      <td>
+        <div class="toggle-group">
+          <input type="radio" name="ag_${i}" id="ag_${i}_p" value="Person" ${isPerson ? "checked" : ""}>
+          <label for="ag_${i}_p" class="person-label">Person</label>
+          <input type="radio" name="ag_${i}" id="ag_${i}_g" value="Group" ${!isPerson ? "checked" : ""}>
+          <label for="ag_${i}_g" class="group-label">Group</label>
+        </div>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// ── Step 2: Convert ────────────────────────────────────────────
+document.getElementById("btn-convert").addEventListener("click", doConvert);
+
+async function doConvert() {
+  // Collect agent overrides
+  const overrides = {};
+  currentAgents.forEach((ag, i) => {
+    const sel = document.querySelector(`input[name="ag_${i}"]:checked`);
+    if (sel) overrides[ag.uri] = sel.value;
+  });
+
+  setStatus("info", "Converting…", true);
+  document.getElementById("btn-convert").disabled = true;
+
+  try {
+    const res = await fetch("/convert", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ttl: currentTTL, agent_overrides: overrides }),
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error);
+
+    currentRecords = data.records;
+    renderResults(currentRecords);
+    document.getElementById("results-section").style.display = "block";
+    setStatus("ok", `✓ ${data.count} Linked Art records generated.`);
+    setStep(3);
+    document.getElementById("results-section").scrollIntoView({ behavior: "smooth" });
+  } catch (err) {
+    setStatus("error", `Conversion error: ${err.message}`);
+  } finally {
+    document.getElementById("btn-convert").disabled = false;
+  }
+}
+
+// ── Step 3: Render results ─────────────────────────────────────
+function renderResults(records) {
+  document.getElementById("results-count").textContent =
+    `${records.length} record${records.length !== 1 ? "s" : ""}`;
+
+  const tabBar = document.getElementById("tab-bar");
+  const tabContent = document.getElementById("tab-content");
+  tabBar.innerHTML = "";
+  tabContent.innerHTML = "";
+
+  records.forEach((rec, i) => {
+    const slug = slugify(rec.id);
+    const label = rec._label || slug;
+    const laType = rec.type || "?";
+
+    // Tab button
+    const btn = document.createElement("button");
+    btn.className = "tab-btn" + (i === 0 ? " active" : "");
+    btn.textContent = label.length > 22 ? label.slice(0, 20) + "…" : label;
+    btn.title = label;
+    btn.addEventListener("click", () => activateTab(i));
+    tabBar.appendChild(btn);
+
+    // Pane
+    const pane = document.createElement("div");
+    pane.className = "tab-pane" + (i === 0 ? " active" : "");
+    pane.id = `pane-${i}`;
+    pane.innerHTML = `
+      <div class="record-header">
+        <span class="type-chip">${escHtml(laType)}</span>
+        <span class="record-id">${escHtml(rec.id)}</span>
+        <button class="btn-secondary dl-btn" onclick="downloadOne(${i})">↓ ${escHtml(slug)}.jsonld</button>
+      </div>
+      <pre>${escHtml(JSON.stringify(rec, null, 2))}</pre>`;
+    tabContent.appendChild(pane);
+  });
+}
+
+function activateTab(idx) {
+  document.querySelectorAll(".tab-btn").forEach((b, i) =>
+    b.classList.toggle("active", i === idx));
+  document.querySelectorAll(".tab-pane").forEach((p, i) =>
+    p.classList.toggle("active", i === idx));
+}
+
+// ── Downloads ──────────────────────────────────────────────────
+function downloadOne(idx) {
+  const rec = currentRecords[idx];
+  const fname = slugify(rec.id) + ".jsonld";
+  downloadText(JSON.stringify(rec, null, 2), fname, "application/ld+json");
+}
+
+document.getElementById("btn-dl-jsonl").addEventListener("click", () => {
+  const lines = currentRecords.map(r => JSON.stringify(r)).join("\n");
+  downloadText(lines, "linked_art_records.jsonl", "application/x-ndjson");
+});
+
+document.getElementById("btn-dl-zip").addEventListener("click", async () => {
+  const zip = new JSZip();
+  const folder = zip.folder("linked_art");
+  currentRecords.forEach(rec => {
+    folder.file(slugify(rec.id) + ".jsonld", JSON.stringify(rec, null, 2));
+  });
+  const blob = await zip.generateAsync({ type: "blob" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "linked_art_records.zip"; a.click();
+  URL.revokeObjectURL(url);
+});
+
+function downloadText(text, filename, mime) {
+  const blob = new Blob([text], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ── Utils ──────────────────────────────────────────────────────
+function escHtml(s) {
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+function slugify(uri) {
+  const last = uri.split("/").pop().split("#").pop();
+  return last.replace(/[^A-Za-z0-9_\-]/g, "_") || "record";
+}
+</script>
+</body>
+</html>
