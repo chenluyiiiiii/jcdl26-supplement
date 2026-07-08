@@ -1,0 +1,67 @@
+{
+  "@context": "https://linked.art/ns/v1/linked-art.json",
+  "id": "https://example.org/sample/resource/video_gwaa_ceoi",
+  "type": "DigitalObject",
+  "_label": "Choy Lei Fat Technique - Gwaa Ceoi / 蔡李佛動作簡介 - 掛捶",
+  "identified_by": [
+    {
+      "type": "Name",
+      "content": "Choy Lei Fat Technique - Gwaa Ceoi"
+    },
+    {
+      "type": "Name",
+      "content": "蔡李佛動作簡介 - 掛捶"
+    }
+  ],
+  "classified_as": [
+    {
+      "id": "https://example.org/sample/ontology/maon-daext#Instructional_video",
+      "type": "Type",
+      "_label": "Instructional_video"
+    }
+  ],
+  "member_of": [
+    {
+      "id": "https://example.org/sample/resource/archive_a",
+      "type": "Set",
+      "_label": "The Archive"
+    }
+  ],
+  "access_point": [
+    {
+      "id": "https://example.org/video-a",
+      "type": "DigitalObject"
+    }
+  ],
+  "part_of": {
+    "id": "https://example.org/sample/resource/maetp_digital_learning_platform",
+    "type": "DigitalObject",
+    "_label": "MAETP Digital Learning Platform"
+  },
+  "used_for": [
+    {
+      "type": "Activity",
+      "_label": "MAETP Programme",
+      "classified_as": [
+        {
+          "id": "https://example.org/sample/ontology/maon-daext#Programme",
+          "type": "Type",
+          "_label": "Programme"
+        }
+      ]
+    }
+  ],
+  "referred_to_by": [
+    {
+      "type": "LinguisticObject",
+      "classified_as": [
+        {
+          "id": "http://vocab.getty.edu/aat/300435416",
+          "type": "Type",
+          "_label": "Description"
+        }
+      ],
+      "content": "This instructional video documents the Choy Li Fut style and the Gwaa Ceoi / hanging hammer technique, and features Person D. It is part of the MAETP Digital Learning Platform and used in the MAETP Programme."
+    }
+  ]
+}
