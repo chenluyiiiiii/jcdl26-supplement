@@ -1,0 +1,125 @@
+{
+  "@context": "https://linked.art/ns/v1/linked-art.json",
+  "id": "https://example.org/sample/resource/mocap_animation_sei_moon_baak_daa_output_v2",
+  "type": "DigitalObject",
+  "_label": "Sei Moon Baak Daa 四門逼打 - Output V2",
+  "identified_by": [
+    {
+      "type": "Name",
+      "content": "Sei Moon Baak Daa - Output V2"
+    },
+    {
+      "type": "Name",
+      "content": "四門逼打 - Output V2"
+    }
+  ],
+  "classified_as": [
+    {
+      "id": "https://example.org/sample/ontology/maon-daext#MoCap_animation",
+      "type": "Type",
+      "_label": "MoCap_animation"
+    }
+  ],
+  "member_of": [
+    {
+      "id": "https://example.org/sample/resource/archive_a",
+      "type": "Set",
+      "_label": "The Archive"
+    }
+  ],
+  "access_point": [
+    {
+      "id": "https://example.org/mocap-animation-a",
+      "type": "DigitalObject"
+    }
+  ],
+  "used_for": [
+    {
+      "type": "Activity",
+      "_label": "Use in Re-Actor installation",
+      "referred_to_by": [
+        {
+          "type": "LinguisticObject",
+          "classified_as": [
+            {
+              "id": "http://vocab.getty.edu/aat/300435415",
+              "type": "Type",
+              "_label": "Note"
+            }
+          ],
+          "content": "Used in the Re-Actor interactive installation (https://example.org/sample/resource/reactor)."
+        }
+      ]
+    },
+    {
+      "type": "Activity",
+      "_label": "Shown at Exhibition A",
+      "classified_as": [
+        {
+          "id": "http://vocab.getty.edu/aat/300054766",
+          "type": "Type",
+          "_label": "exhibitions"
+        }
+      ],
+      "referred_to_by": [
+        {
+          "type": "LinguisticObject",
+          "classified_as": [
+            {
+              "id": "http://vocab.getty.edu/aat/300435415",
+              "type": "Type",
+              "_label": "Note"
+            }
+          ],
+          "content": "Shown at the exhibition Exhibition A (https://example.org/sample/resource/exhibition_a)."
+        }
+      ]
+    }
+  ],
+  "created_by": {
+    "type": "Creation",
+    "referred_to_by": [
+      {
+        "type": "LinguisticObject",
+        "classified_as": [
+          {
+            "id": "http://vocab.getty.edu/aat/300435415",
+            "type": "Type",
+            "_label": "Note"
+          }
+        ],
+        "content": "Derived from Sei Moon Baak Daa 四門逼打 motion capture data (https://example.org/sample/resource/mocap_data_sei_moon_baak_daa)."
+      }
+    ],
+    "carried_out_by": [
+      {
+        "id": "https://example.org/sample/resource/person_f",
+        "type": "Person",
+        "_label": "Person F"
+      },
+      {
+        "id": "https://example.org/sample/resource/person_b",
+        "type": "Person",
+        "_label": "Person B"
+      },
+      {
+        "id": "https://example.org/sample/resource/person_c",
+        "type": "Person",
+        "_label": "Person C"
+      }
+    ]
+  },
+  "referred_to_by": [
+    {
+      "type": "LinguisticObject",
+      "classified_as": [
+        {
+          "id": "http://vocab.getty.edu/aat/300435416",
+          "type": "Type",
+          "_label": "Description"
+        }
+      ],
+      "content": "This digital object is a motion-capture-derived visualization of Sei Moon Baak Daa 四門逼打, documenting Hakka Kung Fu and featuring Person E. It was derived from the corresponding MoCap data, used in the Re-Actor installation, and shown in the exhibition Exhibition A."
+    }
+  ]
+}
