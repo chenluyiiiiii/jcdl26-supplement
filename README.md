@@ -34,7 +34,10 @@ Python toolkit for converting MAon-DAExt Turtle instances into Linked Art-compat
 Ontology metrics associated with the ontology artifacts discussed in the paper.
 
 - `ontology_metrics.md`: selected ontology metrics used in the paper.
-- `maon_sql_widget.html`: local inspection/helper artifact associated with SQL-based ontology parsing.
+  
+### `maon_sql_widget.html`
+
+A lightweight browser-based SQL widget to explore the verified ontology parsing output used during ontology inspection.
 
 The full ontology TTL files are not included in this supplementary package; this repository provides the reported metrics, case samples, and conversion code needed to inspect the workflow.
 
