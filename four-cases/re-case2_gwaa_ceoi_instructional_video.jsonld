@@ -36,12 +36,12 @@
   "part_of": {
     "id": "https://example.org/sample/resource/maetp_digital_learning_platform",
     "type": "DigitalObject",
-    "_label": "MAETP Digital Learning Platform"
+    "_label": "Platform_01"
   },
   "used_for": [
     {
       "type": "Activity",
-      "_label": "MAETP Programme",
+      "_label": "Programme_01",
       "classified_as": [
         {
           "id": "https://example.org/sample/ontology/maon-daext#Programme",
