@@ -1,17 +1,17 @@
 {
   "@context": "https://linked.art/ns/v1/linked-art.json",
-  "id": "https://example.org/sample/resource/exhibition_a",
+  "id": "https://hkmala.org/resource/exhibition_300_years_hakka_kung_fu",
   "type": "Event",
-  "_label": "Exhibition A",
+  "_label": "300 Years of Hakka Kung Fu",
   "identified_by": [
     {
       "type": "Name",
-      "content": "Exhibition A"
+      "content": "300 Years of Hakka Kung Fu"
     }
   ],
   "classified_as": [
     {
-      "id": "https://example.org/sample/ontology/maon-daext#Exhibition",
+      "id": "https://purl.org/hkmala/ontology/maon-daext#Exhibition",
       "type": "Type",
       "_label": "Exhibition"
     },
@@ -28,56 +28,56 @@
   },
   "took_place_at": [
     {
-      "id": "https://example.org/sample/resource/place_a",
+      "id": "https://hkmala.org/resource/place_cityu_academic_3_18f",
       "type": "Place",
-      "_label": "Place A"
+      "_label": "18/F, Academic 3, City University of Hong Kong, Kowloon Tong, Hong Kong"
     }
   ],
   "carried_out_by": [
     {
-      "id": "https://example.org/sample/resource/organization_e",
+      "id": "https://hkmala.org/resource/intangible_cultural_heritage_office_lcsd",
       "type": "Group",
-      "_label": "Organization E"
+      "_label": "Intangible Cultural Heritage Office, Leisure and Cultural Services Department"
     },
     {
-      "id": "https://example.org/sample/resource/organization_d",
+      "id": "https://hkmala.org/resource/international_guoshu_association",
       "type": "Group",
-      "_label": "Organization D"
+      "_label": "International Guoshu Association"
     },
     {
-      "id": "https://example.org/sample/resource/person_a",
+      "id": "https://hkmala.org/resource/hing_chao",
       "type": "Person",
-      "_label": "Person A"
+      "_label": "Hing Chao / 趙式慶"
     },
     {
-      "id": "https://example.org/sample/resource/person_b",
+      "id": "https://hkmala.org/resource/jeffrey_shaw",
       "type": "Person",
-      "_label": "Person B"
+      "_label": "Jeffrey Shaw"
     },
     {
-      "id": "https://example.org/sample/resource/person_c",
+      "id": "https://hkmala.org/resource/sarah_kenderdine",
       "type": "Person",
-      "_label": "Person C"
+      "_label": "Sarah Kenderdine"
     },
     {
-      "id": "https://example.org/sample/resource/organization_f",
+      "id": "https://hkmala.org/resource/hakka_kung_fu_culture_research",
       "type": "Group",
-      "_label": "Organization F"
+      "_label": "Hakka Kung Fu Culture Research"
     },
     {
-      "id": "https://example.org/sample/resource/organization_a",
+      "id": "https://hkmala.org/resource/acim_cityu",
       "type": "Group",
-      "_label": "Organization A"
+      "_label": "Centre for Applied Computing and Interactive Media, City University of Hong Kong"
     },
     {
-      "id": "https://example.org/sample/resource/organization_g",
+      "id": "https://hkmala.org/resource/hong_kong_heritage_museum",
       "type": "Group",
-      "_label": "Organization G"
+      "_label": "Hong Kong Heritage Museum"
     },
     {
-      "id": "https://example.org/sample/resource/organization_h",
+      "id": "https://hkmala.org/resource/salon_films",
       "type": "Group",
-      "_label": "Organization H"
+      "_label": "Salon Films (H.K.) Ltd"
     }
   ],
   "referred_to_by": [
@@ -101,7 +101,7 @@
           "_label": "Credit/Acknowledgement"
         }
       ],
-      "content": "Co-organizers: Organization E and Organization D. Curators: Person A, Person B, Person C. Collaborators: Organization F, Organization A, Organization G, Organization H."
+      "content": "Co-organizers: Intangible Cultural Heritage Office (LCSD) and International Guoshu Association. Curators: Hing Chao, Jeffrey Shaw, Sarah Kenderdine. Collaborators: Hakka Kung Fu Culture Research, ACIM CityU, Hong Kong Heritage Museum, Salon Films (H.K.) Ltd."
     },
     {
       "type": "LinguisticObject",
@@ -112,7 +112,7 @@
           "_label": "Note"
         }
       ],
-      "content": "Digital resources used in the exhibition include the Re-Actor interactive installation (https://example.org/sample/resource/reactor), the Sei Moon Baak Daa MoCap animation Output V2 (https://example.org/sample/resource/mocap_animation_sei_moon_baak_daa_output_v2), and the Sei Moon Baak Daa motion capture data (https://example.org/sample/resource/mocap_data_sei_moon_baak_daa)."
+      "content": "Digital resources used in the exhibition include the Re-Actor interactive installation (https://hkmala.org/resource/reactor), the Sei Moon Baak Daa MoCap animation Output V2 (https://hkmala.org/resource/mocap_animation_sei_moon_baak_daa_output_v2), and the Sei Moon Baak Daa motion capture data (https://hkmala.org/resource/mocap_data_sei_moon_baak_daa)."
     }
   ],
   "subject_of": [
@@ -124,7 +124,7 @@
           "type": "DigitalObject",
           "access_point": [
             {
-              "id": "https://example.org/exhibition-a",
+              "id": "https://www.cityu.edu.hk/bg/exhibitions/hakkakungfu/index.html",
               "type": "DigitalObject"
             }
           ],
