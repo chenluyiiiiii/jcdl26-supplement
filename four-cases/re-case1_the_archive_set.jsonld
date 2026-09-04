@@ -1,21 +1,21 @@
 {
   "@context": "https://linked.art/ns/v1/linked-art.json",
-  "id": "https://example.org/sample/resource/archive_a",
+  "id": "https://hkmala.org/resource/hkmala",
   "type": "Set",
-  "_label": "The Archive",
+  "_label": "Hong Kong Martial Arts Living Archive",
   "identified_by": [
     {
       "type": "Name",
-      "content": "The Archive"
+      "content": "Hong Kong Martial Arts Living Archive"
     },
     {
       "type": "Name",
-      "content": "The Archive"
+      "content": "HKMALA"
     }
   ],
   "classified_as": [
     {
-      "id": "https://example.org/sample/ontology/maon-daext#Digital_Archive",
+      "id": "https://purl.org/hkmala/ontology/maon-daext#Digital_Archive",
       "type": "Type",
       "_label": "Digital_Archive"
     }
@@ -28,24 +28,24 @@
     },
     "carried_out_by": [
       {
-        "id": "https://example.org/sample/resource/organization_d",
+        "id": "https://hkmala.org/resource/international_guoshu_association",
         "type": "Group",
-        "_label": "Organization D"
+        "_label": "International Guoshu Association"
       },
       {
-        "id": "https://example.org/sample/resource/organization_a",
+        "id": "https://hkmala.org/resource/acim_cityu",
         "type": "Group",
-        "_label": "Organization A"
+        "_label": "Centre for Applied Computing and Interactive Media, City University of Hong Kong"
       },
       {
-        "id": "https://example.org/sample/resource/organization_b",
+        "id": "https://hkmala.org/resource/visualization_research_center_hkbu",
         "type": "Group",
-        "_label": "Organization B"
+        "_label": "Visualization Research Center, Hong Kong Baptist University"
       },
       {
-        "id": "https://example.org/sample/resource/organization_c",
+        "id": "https://hkmala.org/resource/em_plus_epfl",
         "type": "Group",
-        "_label": "Organization C"
+        "_label": "Laboratory for Experimental Museology, EPFL"
       }
     ]
   },
@@ -59,19 +59,19 @@
           "_label": "Description"
         }
       ],
-      "content": "The Archive is an ongoing digital humanities project initiated in 2012. It archives, annotates, and presents living kung fu traditions through motion capture and visualization."
+      "content": "Hong Kong Martial Arts Living Archive is an ongoing digital humanities project initiated in 2012. It archives, annotates, and presents living kung fu traditions through motion capture and visualization."
     }
   ],
   "subject_of": [
     {
       "type": "LinguisticObject",
-      "_label": "The Archive project webpage",
+      "_label": "HKMALA project webpage",
       "digitally_carried_by": [
         {
           "type": "DigitalObject",
           "access_point": [
             {
-              "id": "https://example.org/archive-a",
+              "id": "https://www.acim.cityu.edu.hk/projects/hong-kong-martial-arts-living-archive",
               "type": "DigitalObject"
             }
           ],
