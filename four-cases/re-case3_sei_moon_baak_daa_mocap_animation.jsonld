@@ -1,6 +1,6 @@
 {
   "@context": "https://linked.art/ns/v1/linked-art.json",
-  "id": "https://example.org/sample/resource/mocap_animation_sei_moon_baak_daa_output_v2",
+  "id": "https://hkmala.org/resource/mocap_animation_sei_moon_baak_daa_output_v2",
   "type": "DigitalObject",
   "_label": "Sei Moon Baak Daa 四門逼打 - Output V2",
   "identified_by": [
@@ -15,21 +15,21 @@
   ],
   "classified_as": [
     {
-      "id": "https://example.org/sample/ontology/maon-daext#MoCap_animation",
+      "id": "https://purl.org/hkmala/ontology/maon-daext#MoCap_animation",
       "type": "Type",
       "_label": "MoCap_animation"
     }
   ],
   "member_of": [
     {
-      "id": "https://example.org/sample/resource/archive_a",
+      "id": "https://hkmala.org/resource/hkmala",
       "type": "Set",
-      "_label": "The Archive"
+      "_label": "Hong Kong Martial Arts Living Archive"
     }
   ],
   "access_point": [
     {
-      "id": "https://example.org/mocap-animation-a",
+      "id": "https://youtu.be/jdahVc3pSUQ",
       "type": "DigitalObject"
     }
   ],
@@ -47,13 +47,13 @@
               "_label": "Note"
             }
           ],
-          "content": "Used in the Re-Actor interactive installation (https://example.org/sample/resource/reactor)."
+          "content": "Used in the Re-Actor interactive installation (https://hkmala.org/resource/reactor)."
         }
       ]
     },
     {
       "type": "Activity",
-      "_label": "Shown at Exhibition A",
+      "_label": "Shown at 300 Years of Hakka Kung Fu",
       "classified_as": [
         {
           "id": "http://vocab.getty.edu/aat/300054766",
@@ -71,7 +71,7 @@
               "_label": "Note"
             }
           ],
-          "content": "Shown at the exhibition Exhibition A (https://example.org/sample/resource/exhibition_a)."
+          "content": "Shown at the exhibition 300 Years of Hakka Kung Fu (https://hkmala.org/resource/exhibition_300_years_hakka_kung_fu)."
         }
       ]
     }
@@ -88,24 +88,24 @@
             "_label": "Note"
           }
         ],
-        "content": "Derived from Sei Moon Baak Daa 四門逼打 motion capture data (https://example.org/sample/resource/mocap_data_sei_moon_baak_daa)."
+        "content": "Derived from Sei Moon Baak Daa 四門逼打 motion capture data (https://hkmala.org/resource/mocap_data_sei_moon_baak_daa)."
       }
     ],
     "carried_out_by": [
       {
-        "id": "https://example.org/sample/resource/person_f",
+        "id": "https://hkmala.org/resource/tobias_gremmler",
         "type": "Person",
-        "_label": "Person F"
+        "_label": "Tobias Gremmler"
       },
       {
-        "id": "https://example.org/sample/resource/person_b",
+        "id": "https://hkmala.org/resource/jeffrey_shaw",
         "type": "Person",
-        "_label": "Person B"
+        "_label": "Jeffrey Shaw"
       },
       {
-        "id": "https://example.org/sample/resource/person_c",
+        "id": "https://hkmala.org/resource/sarah_kenderdine",
         "type": "Person",
-        "_label": "Person C"
+        "_label": "Sarah Kenderdine"
       }
     ]
   },
@@ -119,7 +119,7 @@
           "_label": "Description"
         }
       ],
-      "content": "This digital object is a motion-capture-derived visualization of Sei Moon Baak Daa 四門逼打, documenting Hakka Kung Fu and featuring Person E. It was derived from the corresponding MoCap data, used in the Re-Actor installation, and shown in the exhibition Exhibition A."
+      "content": "This digital object is a motion-capture-derived visualization of Sei Moon Baak Daa 四門逼打, documenting Hakka Kung Fu and featuring Oscar Lam. It was derived from the corresponding MoCap data, used in the Re-Actor installation, and shown in the exhibition 300 Years of Hakka Kung Fu."
     }
   ]
 }
