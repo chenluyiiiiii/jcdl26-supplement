@@ -1,6 +1,6 @@
 {
   "@context": "https://linked.art/ns/v1/linked-art.json",
-  "id": "https://example.org/sample/resource/video_gwaa_ceoi",
+  "id": "https://hkmala.org/resource/video_gwaa_ceoi",
   "type": "DigitalObject",
   "_label": "Choy Lei Fat Technique - Gwaa Ceoi / 蔡李佛動作簡介 - 掛捶",
   "identified_by": [
@@ -15,36 +15,36 @@
   ],
   "classified_as": [
     {
-      "id": "https://example.org/sample/ontology/maon-daext#Instructional_video",
+      "id": "https://purl.org/hkmala/ontology/maon-daext#Instructional_video",
       "type": "Type",
       "_label": "Instructional_video"
     }
   ],
   "member_of": [
     {
-      "id": "https://example.org/sample/resource/archive_a",
+      "id": "https://hkmala.org/resource/hkmala",
       "type": "Set",
-      "_label": "The Archive"
+      "_label": "Hong Kong Martial Arts Living Archive"
     }
   ],
   "access_point": [
     {
-      "id": "https://example.org/video-a",
+      "id": "https://www.facebook.com/share/v/1BC9MHsLRi/",
       "type": "DigitalObject"
     }
   ],
   "part_of": {
-    "id": "https://example.org/sample/resource/maetp_digital_learning_platform",
+    "id": "https://hkmala.org/resource/maetp_digital_learning_platform",
     "type": "DigitalObject",
-    "_label": "Platform_01"
+    "_label": "MAETP Digital Learning Platform"
   },
   "used_for": [
     {
       "type": "Activity",
-      "_label": "Programme_01",
+      "_label": "MAETP Programme",
       "classified_as": [
         {
-          "id": "https://example.org/sample/ontology/maon-daext#Programme",
+          "id": "https://purl.org/hkmala/ontology/maon-daext#Programme",
           "type": "Type",
           "_label": "Programme"
         }
@@ -61,7 +61,7 @@
           "_label": "Description"
         }
       ],
-      "content": "This instructional video documents the Choy Li Fut style and the Gwaa Ceoi / hanging hammer technique, and features Person D. It is part of the MAETP Digital Learning Platform and used in the MAETP Programme."
+      "content": "This instructional video documents the Choy Li Fut style and the Gwaa Ceoi / hanging hammer technique, and features Sifu Jimmy Chiu. It is part of the MAETP Digital Learning Platform and used in the MAETP Programme."
     }
   ]
 }
