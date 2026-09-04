@@ -1,20 +1,20 @@
-@prefix : <https://example.org/sample/resource/sample-instances#> .
+@prefix : <https://hkmala.org/resource/sample-instances#> .
 @prefix hda: <https://purl.org/maont/daext/> .
 @prefix mao: <https://purl.org/maont/ontology/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix hres: <https://example.org/sample/resource/> .
+@prefix hres: <https://hkmala.org/resource/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@base <https://example.org/sample/resource/sample-instances> .
+@base <https://hkmala.org/resource/sample-instances> .
 
-<https://example.org/sample/resource/sample-instances> rdf:type owl:Ontology ;
+<https://hkmala.org/resource/sample-instances> rdf:type owl:Ontology ;
                                                 owl:imports <https://purl.org/maont/daext/> ,
                                                             <https://purl.org/maont/ontology_individual> ;
                                                 dcterms:description "Sample individuals used to test the conversion from MAon-DAExt local representations to Linked Art-compatible JSON-LD records."@en ;
-                                                rdfs:label "The Archive sample instances for MAon-DAExt"@en .
+                                                rdfs:label "HKMALA sample instances for MAon-DAExt"@en .
 
 #################################################################
 #    Annotation properties
@@ -28,48 +28,48 @@ dcterms:created rdf:type owl:AnnotationProperty .
 #    Individuals
 #################################################################
 
-###  https://example.org/sample/resource/organization_a
-hres:organization_a rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/acim_cityu
+hres:acim_cityu rdf:type owl:NamedIndividual ,
                          hda:Agent ;
-                rdfs:label "organization_a" ;
-                mao:name_en "Organization A"@en ;
-                mao:name_zh "Organization A"@zh-hk .
+                rdfs:label "acim_cityu" ;
+                mao:name_en "Centre for Applied Computing and Interactive Media, City University of Hong Kong"@en ;
+                mao:name_zh "香港城市大學互動媒體與電算應用中心"@zh-hk .
 
 
-###  https://example.org/sample/resource/organization_c
-hres:organization_c rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/em_plus_epfl
+hres:em_plus_epfl rdf:type owl:NamedIndividual ,
                            hda:Agent ;
-                  rdfs:label "organization_c" ;
-                  mao:name_en "Organization C"@en .
+                  rdfs:label "em_plus_epfl" ;
+                  mao:name_en "Laboratory for Experimental Museology, EPFL"@en .
 
 
-###  https://example.org/sample/resource/exhibition_a
-hres:exhibition_a rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/exhibition_300_years_hakka_kung_fu
+hres:exhibition_300_years_hakka_kung_fu rdf:type owl:NamedIndividual ,
                                                  hda:Exhibition ;
-                                        hda:hasCollaborator hres:organization_a ,
-                                                            hres:organization_f ,
-                                                            hres:organization_g ,
-                                                            hres:organization_h ;
-                                        hda:hasCurator hres:person_a ,
-                                                       hres:person_b ,
-                                                       hres:person_c ;
-                                        hda:hasOrganizer hres:organization_e ,
-                                                         hres:organization_d ;
-                                        hda:hasVenuePlace hres:place_a ;
-                                        hda:memberOfArchive hres:archive_a ;
+                                        hda:hasCollaborator hres:acim_cityu ,
+                                                            hres:hakka_kung_fu_culture_research ,
+                                                            hres:hong_kong_heritage_museum ,
+                                                            hres:salon_films ;
+                                        hda:hasCurator hres:hing_chao ,
+                                                       hres:jeffrey_shaw ,
+                                                       hres:sarah_kenderdine ;
+                                        hda:hasOrganizer hres:intangible_cultural_heritage_office_lcsd ,
+                                                         hres:international_guoshu_association ;
+                                        hda:hasVenuePlace hres:place_cityu_academic_3_18f ;
+                                        hda:memberOfArchive hres:hkmala ;
                                         hda:references hres:mocap_animation_sei_moon_baak_daa_output_v2 ,
                                                        hres:mocap_data_sei_moon_baak_daa ,
                                                        hres:reactor ;
                                         hda:hasDescription "The exhibition presents Hakka kung fu as a distinctive Southern Chinese martial arts system shaped by migration, lineage-based social organization, social conflict, and survival needs."@en ;
                                         hda:hasEndDate "2017-01-04"^^xsd:date ;
                                         hda:hasStartDate "2016-10-28"^^xsd:date ;
-                                        hda:hasTitle "Exhibition A"@en ;
-                                        hda:hasVenue "Place A"@en ;
-                                        rdfs:label "exhibition_a" ;
-                                        mao:name_en "Exhibition A"@en .
+                                        hda:hasTitle "300 Years of Hakka Kung Fu"@en ;
+                                        hda:hasVenue "18/F, Academic 3, City University of Hong Kong, Kowloon Tong, Hong Kong"@en ;
+                                        rdfs:label "exhibition_300_years_hakka_kung_fu" ;
+                                        mao:name_en "300 Years of Hakka Kung Fu"@en .
 
 
-###  https://example.org/sample/resource/hakka_kung_fu
+###  https://hkmala.org/resource/hakka_kung_fu
 hres:hakka_kung_fu rdf:type owl:NamedIndividual ,
                             mao:MA_style ;
                    rdfs:label "hakka_kung_fu" ;
@@ -77,119 +77,119 @@ hres:hakka_kung_fu rdf:type owl:NamedIndividual ,
                    mao:name_zh "客家功夫"@zh-hk .
 
 
-###  https://example.org/sample/resource/organization_f
-hres:organization_f rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/hakka_kung_fu_culture_research
+hres:hakka_kung_fu_culture_research rdf:type owl:NamedIndividual ,
                                              hda:Agent ;
-                                    rdfs:label "organization_f" ;
-                                    mao:name_en "Organization F"@en ;
+                                    rdfs:label "hakka_kung_fu_culture_research" ;
+                                    mao:name_en "Hakka Kung Fu Culture Research"@en ;
                                     mao:name_zh "客家功夫文化研究會"@zh-hk .
 
 
-###  https://example.org/sample/resource/person_a
-hres:person_a rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/hing_chao
+hres:hing_chao rdf:type owl:NamedIndividual ,
                         hda:Agent ;
-               rdfs:label "person_a" ;
-               mao:name_en "Person A"@en ;
-               mao:name_zh "Person A"@zh-hk .
+               rdfs:label "hing_chao" ;
+               mao:name_en "Hing Chao"@en ;
+               mao:name_zh "趙式慶"@zh-hk .
 
 
-###  https://example.org/sample/resource/archive_a
-hres:archive_a rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/hkmala
+hres:hkmala rdf:type owl:NamedIndividual ,
                      hda:Digital_Archive ;
-            hda:hasArchiveComponent hres:exhibition_a ,
+            hda:hasArchiveComponent hres:exhibition_300_years_hakka_kung_fu ,
                                     hres:maetp_digital_learning_platform ,
                                     hres:maetp_programme ,
                                     hres:mocap_animation_sei_moon_baak_daa_output_v2 ,
                                     hres:mocap_data_sei_moon_baak_daa ,
                                     hres:reactor ,
                                     hres:video_gwaa_ceoi ;
-            hda:hasCollaborator hres:organization_a ,
-                                hres:organization_c ,
-                                hres:organization_d ,
-                                hres:organization_b ;
-            hda:hasAccessURL "https://example.org/archive-a"^^xsd:anyURI ;
-            hda:hasDescription "The Archive is an ongoing digital humanities project initiated in 2012. It archives, annotates, and presents living kung fu traditions through motion capture and visualization."@en ;
-            hda:hasTitle "The Archive"@en ,
-                         "The Archive"@en ;
+            hda:hasCollaborator hres:acim_cityu ,
+                                hres:em_plus_epfl ,
+                                hres:international_guoshu_association ,
+                                hres:visualization_research_center_hkbu ;
+            hda:hasAccessURL "https://www.acim.cityu.edu.hk/projects/hong-kong-martial-arts-living-archive"^^xsd:anyURI ;
+            hda:hasDescription "Hong Kong Martial Arts Living Archive is an ongoing digital humanities project initiated in 2012. It archives, annotates, and presents living kung fu traditions through motion capture and visualization."@en ;
+            hda:hasTitle "HKMALA"@en ,
+                         "Hong Kong Martial Arts Living Archive"@en ;
             dcterms:created "2012"^^xsd:gYear ;
-            rdfs:label "archive_a" ;
-            mao:name_en "The Archive"@en ;
-            mao:otherName_en "The Archive"@en .
+            rdfs:label "hkmala" ;
+            mao:name_en "Hong Kong Martial Arts Living Archive"@en ;
+            mao:otherName_en "HKMALA"@en .
 
 
-###  https://example.org/sample/resource/organization_g
-hres:organization_g rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/hong_kong_heritage_museum
+hres:hong_kong_heritage_museum rdf:type owl:NamedIndividual ,
                                         hda:Agent ;
-                               rdfs:label "organization_g" ;
-                               mao:name_en "Organization G"@en ;
+                               rdfs:label "hong_kong_heritage_museum" ;
+                               mao:name_en "Hong Kong Heritage Museum"@en ;
                                mao:name_zh "香港文化博物館"@zh-hk .
 
 
-###  https://example.org/sample/resource/organization_e
-hres:organization_e rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/intangible_cultural_heritage_office_lcsd
+hres:intangible_cultural_heritage_office_lcsd rdf:type owl:NamedIndividual ,
                                                        hda:Agent ;
-                                              rdfs:label "organization_e" ;
-                                              mao:name_en "Organization E"@en ;
+                                              rdfs:label "intangible_cultural_heritage_office_lcsd" ;
+                                              mao:name_en "Intangible Cultural Heritage Office, Leisure and Cultural Services Department"@en ;
                                               mao:name_zh "康樂及文化事務署非物質文化遺產辦事處"@zh-hk .
 
 
-###  https://example.org/sample/resource/organization_d
-hres:organization_d rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/international_guoshu_association
+hres:international_guoshu_association rdf:type owl:NamedIndividual ,
                                                hda:Agent ;
-                                      rdfs:label "organization_d" ;
-                                      mao:name_en "Organization D"@en ;
+                                      rdfs:label "international_guoshu_association" ;
+                                      mao:name_en "International Guoshu Association"@en ;
                                       mao:name_zh "中華國術總會"@zh-hk .
 
 
-###  https://example.org/sample/resource/person_b
-hres:person_b rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/jeffrey_shaw
+hres:jeffrey_shaw rdf:type owl:NamedIndividual ,
                            hda:Agent ;
-                  rdfs:label "person_b" ;
-                  mao:name_en "Person B"@en .
+                  rdfs:label "jeffrey_shaw" ;
+                  mao:name_en "Jeffrey Shaw"@en .
 
 
-###  https://example.org/sample/resource/person_d
-hres:person_d rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/jimmy_chiu
+hres:jimmy_chiu rdf:type owl:NamedIndividual ,
                          mao:MA_master ;
-                rdfs:label "person_d" ;
-                mao:name_en "Person D"@en ;
-                mao:name_zh "Person D"@zh-hk .
+                rdfs:label "jimmy_chiu" ;
+                mao:name_en "Sifu Jimmy Chiu"@en ;
+                mao:name_zh "趙智敏師傅"@zh-hk .
 
 
-###  https://example.org/sample/resource/maetp_digital_learning_platform
+###  https://hkmala.org/resource/maetp_digital_learning_platform
 hres:maetp_digital_learning_platform rdf:type owl:NamedIndividual ,
                                               hda:Digital_Learning_Platform ;
                                      hda:associatedWith hres:maetp_programme ;
-                                     hda:memberOfArchive hres:archive_a ;
+                                     hda:memberOfArchive hres:hkmala ;
                                      hda:references hres:video_gwaa_ceoi ;
                                      hda:hasTitle "MAETP Digital Learning Platform"@en ;
                                      rdfs:label "maetp_digital_learning_platform" ;
                                      mao:name_en "MAETP Digital Learning Platform"@en .
 
 
-###  https://example.org/sample/resource/maetp_programme
+###  https://hkmala.org/resource/maetp_programme
 hres:maetp_programme rdf:type owl:NamedIndividual ,
                               hda:Programme ;
-                     hda:memberOfArchive hres:archive_a ;
+                     hda:memberOfArchive hres:hkmala ;
                      hda:hasTitle "MAETP Programme"@en ;
                      rdfs:label "maetp_programme" ;
                      mao:name_en "MAETP Programme"@en .
 
 
-###  https://example.org/sample/resource/mocap_animation_sei_moon_baak_daa_output_v2
+###  https://hkmala.org/resource/mocap_animation_sei_moon_baak_daa_output_v2
 hres:mocap_animation_sei_moon_baak_daa_output_v2 rdf:type owl:NamedIndividual ,
                                                           hda:MoCap_animation ;
                                                  hda:associatedWith hres:reactor ;
-                                                 hda:createdBy hres:person_b ,
-                                                               hres:person_c ,
-                                                               hres:person_f ;
+                                                 hda:createdBy hres:jeffrey_shaw ,
+                                                               hres:sarah_kenderdine ,
+                                                               hres:tobias_gremmler ;
                                                  hda:derivedFrom hres:mocap_data_sei_moon_baak_daa ;
                                                  hda:documentsStyle hres:hakka_kung_fu ;
                                                  hda:documentsTechnique hres:sei_moon_baak_daa ;
-                                                 hda:featuresMaster hres:person_e ;
-                                                 hda:memberOfArchive hres:archive_a ;
-                                                 hda:shownAt hres:exhibition_a ;
-                                                 hda:hasAccessURL "https://example.org/mocap-animation-a"^^xsd:anyURI ;
+                                                 hda:featuresMaster hres:oscar_lam ;
+                                                 hda:memberOfArchive hres:hkmala ;
+                                                 hda:shownAt hres:exhibition_300_years_hakka_kung_fu ;
+                                                 hda:hasAccessURL "https://youtu.be/jdahVc3pSUQ"^^xsd:anyURI ;
                                                  hda:hasTitle "Sei Moon Baak Daa - Output V2"@en ,
                                                               "四門逼打 - Output V2"@zh-hk ;
                                                  rdfs:label "mocap_animation_sei_moon_baak_daa_output_v2" ;
@@ -197,13 +197,13 @@ hres:mocap_animation_sei_moon_baak_daa_output_v2 rdf:type owl:NamedIndividual ,
                                                  mao:name_zh "四門逼打 - Output V2"@zh-hk .
 
 
-###  https://example.org/sample/resource/mocap_data_sei_moon_baak_daa
+###  https://hkmala.org/resource/mocap_data_sei_moon_baak_daa
 hres:mocap_data_sei_moon_baak_daa rdf:type owl:NamedIndividual ,
                                            hda:MoCap_item ;
                                   hda:documentsStyle hres:hakka_kung_fu ;
                                   hda:documentsTechnique hres:sei_moon_baak_daa ;
-                                  hda:featuresMaster hres:person_e ;
-                                  hda:memberOfArchive hres:archive_a ;
+                                  hda:featuresMaster hres:oscar_lam ;
+                                  hda:memberOfArchive hres:hkmala ;
                                   hda:hasDuration "0:44" ;
                                   hda:hasFrameRate "120fps" ;
                                   hda:hasTitle "Sei Moon Baak Daa motion capture data"@en ,
@@ -213,28 +213,28 @@ hres:mocap_data_sei_moon_baak_daa rdf:type owl:NamedIndividual ,
                                   mao:name_zh "四門逼打動態捕捉數據"@zh-hk .
 
 
-###  https://example.org/sample/resource/person_e
-hres:person_e rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/oscar_lam
+hres:oscar_lam rdf:type owl:NamedIndividual ,
                         mao:MA_master ;
-               rdfs:label "person_e" ;
-               mao:name_en "Person E"@en .
+               rdfs:label "oscar_lam" ;
+               mao:name_en "Oscar Lam"@en .
 
 
-###  https://example.org/sample/resource/place_a
-hres:place_a rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/place_cityu_academic_3_18f
+hres:place_cityu_academic_3_18f rdf:type owl:NamedIndividual ,
                                          mao:E53_place ;
-                                rdfs:label "place_a" ;
-                                mao:name_en "Place A"@en .
+                                rdfs:label "place_cityu_academic_3_18f" ;
+                                mao:name_en "18/F, Academic 3, City University of Hong Kong, Kowloon Tong, Hong Kong"@en .
 
 
-###  https://example.org/sample/resource/reactor
+###  https://hkmala.org/resource/reactor
 hres:reactor rdf:type owl:NamedIndividual ,
                       hda:New_media_installation ;
-             hda:hasArtist hres:person_b ,
-                           hres:person_c ;
-             hda:hasCollaborator hres:person_f ;
-             hda:memberOfArchive hres:archive_a ;
-             hda:present_at hres:exhibition_a ;
+             hda:hasArtist hres:jeffrey_shaw ,
+                           hres:sarah_kenderdine ;
+             hda:hasCollaborator hres:tobias_gremmler ;
+             hda:memberOfArchive hres:hkmala ;
+             hda:present_at hres:exhibition_300_years_hakka_kung_fu ;
              hda:usesDigitalFile hres:mocap_animation_sei_moon_baak_daa_output_v2 ,
                                  hres:mocap_data_sei_moon_baak_daa ;
              hda:usesSystemOrTechnology hda:reactor ;
@@ -243,22 +243,22 @@ hres:reactor rdf:type owl:NamedIndividual ,
              mao:name_en "Re-Actor"@en .
 
 
-###  https://example.org/sample/resource/organization_h
-hres:organization_h rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/salon_films
+hres:salon_films rdf:type owl:NamedIndividual ,
                           hda:Agent ;
-                 rdfs:label "organization_h" ;
-                 mao:name_en "Organization H"@en ;
+                 rdfs:label "salon_films" ;
+                 mao:name_en "Salon Films (H.K.) Ltd"@en ;
                  mao:name_zh "香港沙龍電影有限公司"@zh-hk .
 
 
-###  https://example.org/sample/resource/person_c
-hres:person_c rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/sarah_kenderdine
+hres:sarah_kenderdine rdf:type owl:NamedIndividual ,
                                hda:Agent ;
-                      rdfs:label "person_c" ;
-                      mao:name_en "Person C"@en .
+                      rdfs:label "sarah_kenderdine" ;
+                      mao:name_en "Sarah Kenderdine"@en .
 
 
-###  https://example.org/sample/resource/sei_moon_baak_daa
+###  https://hkmala.org/resource/sei_moon_baak_daa
 hres:sei_moon_baak_daa rdf:type owl:NamedIndividual ,
                                 mao:Form_move ,
                                 mao:MA_technique ;
@@ -267,23 +267,23 @@ hres:sei_moon_baak_daa rdf:type owl:NamedIndividual ,
                        mao:name_zh "四門逼打"@zh-hk .
 
 
-###  https://example.org/sample/resource/person_f
-hres:person_f rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/tobias_gremmler
+hres:tobias_gremmler rdf:type owl:NamedIndividual ,
                               hda:Agent ;
-                     rdfs:label "person_f" ;
-                     mao:name_en "Person F"@en .
+                     rdfs:label "tobias_gremmler" ;
+                     mao:name_en "Tobias Gremmler"@en .
 
 
-###  https://example.org/sample/resource/video_gwaa_ceoi
+###  https://hkmala.org/resource/video_gwaa_ceoi
 hres:video_gwaa_ceoi rdf:type owl:NamedIndividual ,
                               hda:Instructional_video ;
                      hda:associatedWith hres:maetp_digital_learning_platform ,
                                         hres:maetp_programme ;
                      hda:documentsStyle mao:Choy_Li_Fut ;
                      hda:documentsTechnique mao:hanging_hammer ;
-                     hda:featuresMaster hres:person_d ;
-                     hda:memberOfArchive hres:archive_a ;
-                     hda:hasAccessURL "https://example.org/video-a"^^xsd:anyURI ;
+                     hda:featuresMaster hres:jimmy_chiu ;
+                     hda:memberOfArchive hres:hkmala ;
+                     hda:hasAccessURL "https://www.facebook.com/share/v/1BC9MHsLRi/"^^xsd:anyURI ;
                      hda:hasTitle "Choy Lei Fat Technique - Gwaa Ceoi"@en ,
                                   "蔡李佛動作簡介 - 掛捶"@zh-hk ;
                      rdfs:label "video_gwaa_ceoi" ;
@@ -293,11 +293,11 @@ hres:video_gwaa_ceoi rdf:type owl:NamedIndividual ,
                      mao:name_zh "蔡李佛動作簡介 - 掛捶"@zh-hk .
 
 
-###  https://example.org/sample/resource/organization_b
-hres:organization_b rdf:type owl:NamedIndividual ,
+###  https://hkmala.org/resource/visualization_research_center_hkbu
+hres:visualization_research_center_hkbu rdf:type owl:NamedIndividual ,
                                                  hda:Agent ;
-                                        rdfs:label "organization_b" ;
-                                        mao:name_en "Organization B"@en .
+                                        rdfs:label "visualization_research_center_hkbu" ;
+                                        mao:name_en "Visualization Research Center, Hong Kong Baptist University"@en .
 
 
 
