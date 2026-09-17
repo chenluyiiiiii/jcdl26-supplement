@@ -1,5 +1,5 @@
 @prefix : <https://hkmala.org/resource/sample-instances#> .
-@prefix hda: <https://purl.org/maont/daext/> .
+@prefix hda: <https://purl.org/hkmala/ontology/maon-daext#> .
 @prefix mao: <https://purl.org/maont/ontology/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -11,7 +11,7 @@
 @base <https://hkmala.org/resource/sample-instances> .
 
 <https://hkmala.org/resource/sample-instances> rdf:type owl:Ontology ;
-                                                owl:imports <https://purl.org/maont/daext/> ,
+                                                owl:imports <https://purl.org/hkmala/ontology/maon-daext> ,
                                                             <https://purl.org/maont/ontology_individual> ;
                                                 dcterms:description "Sample individuals used to test the conversion from MAon-DAExt local representations to Linked Art-compatible JSON-LD records."@en ;
                                                 rdfs:label "HKMALA sample instances for MAon-DAExt"@en .
