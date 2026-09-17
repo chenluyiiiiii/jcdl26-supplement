@@ -260,11 +260,12 @@
     Digital_Archive → <em>Set</em><br/>
     Exhibition → <em>Event</em><br/>
     Instructional_video, MoCap_animation,<br/>
-    MoCap_item, New_media_installation,<br/>
+    MoCap_item, Interactive_system /<br/>
+    New_media_installation,<br/>
     Digital_Learning_Platform → <em>DigitalObject</em><br/>
     Programme → <em>Activity</em><br/>
     Agent → <em>Person / Group</em><br/>
-    MA_Master → <em>Person</em><br/>
+    MA_master → <em>Person</em><br/>
     E53_place → <em>Place</em>
   </div>
 </aside>
@@ -285,7 +286,7 @@
     </div>
 
     <textarea id="ttl-input" rows="14"
-      placeholder="@prefix hda: <http://purl.org/hkmala/ontology/maon-daext> .
+      placeholder="@prefix hda: <https://purl.org/hkmala/ontology/maon-daext#> .
 @prefix mao: <https://purl.org/maont/ontology/> .
 ...paste your Turtle instance file here..."></textarea>
 
@@ -368,11 +369,11 @@
           <tr><td><code>hda:Instructional_video</code></td><td><code>"type": "DigitalObject"</code></td><td>classified_as Instructional_video</td></tr>
           <tr><td><code>hda:MoCap_animation</code></td><td><code>"type": "DigitalObject"</code></td><td></td></tr>
           <tr><td><code>hda:MoCap_item</code></td><td><code>"type": "DigitalObject"</code></td><td></td></tr>
-          <tr><td><code>hda:Interactive_system</code></td><td><code>"type": "DigitalObject"</code></td><td></td></tr>
+          <tr><td><code>hda:Interactive_system</code> / <code>hda:New_media_installation</code></td><td><code>"type": "DigitalObject"</code></td><td></td></tr>
           <tr><td><code>hda:Digital_Learning_Platform</code></td><td><code>"type": "DigitalObject"</code></td><td></td></tr>
           <tr><td><code>hda:Programme</code></td><td><code>"type": "Activity"</code></td><td></td></tr>
           <tr><td><code>hda:Agent</code></td><td><code>"type": "Person" | "Group"</code></td><td>Heuristic + UI override</td></tr>
-          <tr><td><code>mao:MA_Master</code></td><td><code>"type": "Person"</code></td><td></td></tr>
+          <tr><td><code>mao:MA_master</code></td><td><code>"type": "Person"</code></td><td></td></tr>
           <tr><td><code>mao:E53_place</code></td><td><code>"type": "Place"</code></td><td></td></tr>
           <tr><td colspan="3" style="background:#f9fafb;font-weight:700;padding-top:10px">Properties</td></tr>
           <tr><td><code>hda:hasTitle</code>, <code>mao:name_en/zh</code></td><td><code>identified_by</code> (Name)</td><td></td></tr>
@@ -410,6 +411,12 @@
 let currentTTL = "";
 let currentAgents = [];    // [{uri, label, auto_type}]
 let currentRecords = [];   // full JSON-LD records
+
+window.addEventListener("DOMContentLoaded", () => {
+  if (location.protocol === "file:" || location.hostname.endsWith("github.io")) {
+    setStatus("error", "This web interface needs the local Python backend. Run <code>python converter/run.py</code> and use <code>http://localhost:5050</code>.");
+  }
+});
 
 // ── Helpers ────────────────────────────────────────────────────
 function setStatus(type, html, showSpinner = false) {
@@ -451,6 +458,28 @@ function loadFile(file) {
   reader.readAsText(file);
 }
 
+// ── Backend helper ─────────────────────────────────────────────
+async function postJson(path, payload) {
+  let res;
+  try {
+    res = await fetch(path, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+  } catch (err) {
+    throw new Error("Converter backend is not running. Start it with `python converter/run.py`, then open http://localhost:5050.");
+  }
+
+  const contentType = res.headers.get("content-type") || "";
+  if (!contentType.includes("application/json")) {
+    throw new Error("Converter backend is unavailable. Start it with `python converter/run.py`, then open http://localhost:5050.");
+  }
+  const data = await res.json();
+  if (!res.ok || !data.success) throw new Error(data.error || `HTTP ${res.status}`);
+  return data;
+}
+
 // ── Step 1: Analyse agents ─────────────────────────────────────
 document.getElementById("btn-analyze").addEventListener("click", analyzeAgents);
 document.getElementById("btn-clear").addEventListener("click", () => {
@@ -471,13 +500,7 @@ async function analyzeAgents() {
   document.getElementById("btn-analyze").disabled = true;
 
   try {
-    const res = await fetch("/preview", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ttl }),
-    });
-    const data = await res.json();
-    if (!data.success) throw new Error(data.error);
+    const data = await postJson("/preview", { ttl });
 
     currentAgents = data.agents;
     renderAgentTable(currentAgents);
@@ -528,13 +551,7 @@ async function doConvert() {
   document.getElementById("btn-convert").disabled = true;
 
   try {
-    const res = await fetch("/convert", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ttl: currentTTL, agent_overrides: overrides }),
-    });
-    const data = await res.json();
-    if (!data.success) throw new Error(data.error);
+    const data = await postJson("/convert", { ttl: currentTTL, agent_overrides: overrides });
 
     currentRecords = data.records;
     renderResults(currentRecords);
