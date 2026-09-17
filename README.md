@@ -8,6 +8,18 @@ This repository provides the sample case data, conversion toolkit, and ontology 
 
 ## Repository Contents
 
+### Ontology Resources
+
+For access to MAon data and the query interface, visit the [MAon resource page](https://purl.org/maont/techCorpus).
+
+The ontology and individual resources are maintained externally and are available through the following persistent URLs:
+
+- [MAon ontology (MAon.ttl)](https://purl.org/maont/ontology)
+- [MAon individual registry (MAon_individual.ttl)](http://purl.org/maont/ontology_individual)
+- [Digital Archive Extension (MAon_DAExt.ttl)](http://purl.org/hkmala/ontology/maon-daext)
+
+This repository provides supplementary case data, conversion code, and ontology metrics.
+
 ### `four-cases/`
 
 Sample data for the four case records discussed in the paper:
@@ -18,8 +30,6 @@ Sample data for the four case records discussed in the paper:
 - `re-case3_sei_moon_baak_daa_mocap_animation.jsonld`: Linked Art-compatible representation of a motion-capture-derived animation case as a `DigitalObject`.
 - `re-case4_anonymous_exhibition.jsonld`: Linked Art-compatible representation of an exhibition case as an `Event`.
 - `catalog-v001.xml`: XML catalog for resolving ontology IRIs without local absolute paths.
-
-The case files use neutral labels such as `The Archive`, `Exhibition A`, `Organization A`, and `Person A`, matching the paper's anonymized case presentation.
 
 ### `converter/`
 
