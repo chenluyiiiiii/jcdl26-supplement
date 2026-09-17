@@ -19,8 +19,17 @@ from rdflib import Graph, Namespace, RDF, RDFS, OWL, Literal, URIRef
 from rdflib.namespace import XSD, SKOS
 
 # ── Namespaces ────────────────────────────────────────────────────────────────
-HDA    = Namespace("https://purl.org/maont/daext/")
+HDA    = Namespace("https://purl.org/hkmala/ontology/maon-daext#")
 MAO    = Namespace("https://purl.org/maont/ontology/")
+
+# Legacy/provisional namespace accepted for backwards compatibility.
+HDA_LEGACY_BASES = (
+    "https://purl.org/maont/daext/",
+    "http://purl.org/maont/daext/",
+    "http://purl.org/hkmala/ontology/maon-daext#",
+    "https://purl.org/hkmala/ontology/maon-daext/",
+    "http://purl.org/hkmala/ontology/maon-daext/",
+)
 DCTERMS = Namespace("http://purl.org/dc/terms/")
 AAT    = Namespace("http://vocab.getty.edu/aat/")
 LA_CONTEXT = "https://linked.art/ns/v1/linked-art.json"
@@ -33,10 +42,12 @@ CLASS_TO_LA_TYPE: dict[str, str] = {
     str(HDA.MoCap_animation):        "DigitalObject",
     str(HDA.MoCap_item):             "DigitalObject",
     str(HDA.New_media_installation): "DigitalObject",
+    str(HDA.Interactive_system):      "DigitalObject",
     str(HDA.Digital_Learning_Platform): "DigitalObject",
     str(HDA.Programme):              "Activity",
     str(HDA.Agent):                  "Group",    # refined by classify_agent()
-    str(MAO.MA_Master):              "Person",
+    str(MAO.MA_master):              "Person",
+    str(MAO.MA_Master):              "Person",  # legacy spelling accepted
     str(MAO.MA_style):               "Type",
     str(MAO.MA_technique):           "Type",
     str(MAO.Form_move):              "Type",
@@ -61,6 +72,30 @@ AAT_EXHIBITIONS = "http://vocab.getty.edu/aat/300054766"
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
+
+def _normalise_hda_aliases(g: Graph) -> None:
+    """Add canonical MAon-DAExt triples for known legacy namespace aliases.
+
+    This keeps old supplementary/example TTL files convertible while emitting
+    records classified with the current MAon-DAExt namespace.
+    """
+    additions = []
+
+    def canon(term):
+        if not isinstance(term, URIRef):
+            return term
+        text = str(term)
+        for base in HDA_LEGACY_BASES:
+            if text.startswith(base):
+                return URIRef(str(HDA) + text[len(base):])
+        return term
+
+    for subj, pred, obj in list(g):
+        cs, cp, co = canon(subj), canon(pred), canon(obj)
+        if (cs, cp, co) != (subj, pred, obj):
+            additions.append((cs, cp, co))
+    for triple in additions:
+        g.add(triple)
 
 def _is_org_name(name: str) -> bool:
     nl = name.lower()
@@ -100,8 +135,9 @@ def _primary_class(g: Graph, uri: URIRef) -> Optional[str]:
 
 def classify_agent(g: Graph, uri: URIRef) -> str:
     """Heuristic: determine whether an hda:Agent is a Person or Group."""
-    # Explicitly typed as MA_Master → Person
-    if (uri, RDF.type, MAO.MA_Master) in g:
+    # Explicitly typed as MA_master (or legacy MA_Master) → Person
+    if ((uri, RDF.type, MAO.MA_master) in g or
+            (uri, RDF.type, MAO.MA_Master) in g):
         return "Person"
     # Check all name literals for org keywords
     for prop in (MAO.name_en, MAO.name_zh, RDFS.label):
@@ -513,6 +549,7 @@ def convert_individual(
             str(HDA.MoCap_animation):           _map_mocap_animation,
             str(HDA.MoCap_item):                _map_mocap_item,
             str(HDA.New_media_installation):    _map_new_media_installation,
+            str(HDA.Interactive_system):         _map_new_media_installation,
             str(HDA.Digital_Learning_Platform): _map_digital_learning_platform,
         }
         fn = dispatch.get(primary_cls, _common_digital)
@@ -537,6 +574,7 @@ def convert_ttl(
     """
     g = Graph()
     g.parse(data=ttl_content, format="turtle")
+    _normalise_hda_aliases(g)
 
     records: list[dict] = []
     for uri in g.subjects(RDF.type, OWL.NamedIndividual):
@@ -573,6 +611,7 @@ def detect_individuals(ttl_content: str) -> dict[str, list[dict]]:
     """
     g = Graph()
     g.parse(data=ttl_content, format="turtle")
+    _normalise_hda_aliases(g)
 
     buckets: dict[str, list[dict]] = {}
 
@@ -594,7 +633,7 @@ def detect_individuals(ttl_content: str) -> dict[str, list[dict]]:
         }
 
         # Agents get Person/Group disambiguation; bucket by resolved type
-        if cls in (str(HDA.Agent), str(MAO.MA_Master)):
+        if cls in (str(HDA.Agent), str(MAO.MA_master), str(MAO.MA_Master)):
             entry["auto_type"] = classify_agent(g, uri)
             la_type = entry["auto_type"]
 
