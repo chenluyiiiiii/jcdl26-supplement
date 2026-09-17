@@ -16,7 +16,7 @@ The ontology and individual resources are maintained externally and are availabl
 
 - [MAon ontology (MAon.ttl)](https://purl.org/maont/ontology)
 - [MAon individual registry (MAon_individual.ttl)](http://purl.org/maont/ontology_individual)
-- [Digital Archive Extension (MAon_DAExt.ttl)](https://purl.archive.org/purl/maont/daext/)
+- [Digital Archive Extension (MAon_DAExt.ttl)](http://purl.org/hkmala/ontology/maon-daext)))
 
 This repository provides supplementary case data, conversion code, and ontology metrics.
 
