@@ -66,7 +66,3 @@ Or start the local web interface:
 ```bash
 python converter/run.py
 ```
-
-## Review Note
-
-Original person, archive, organization, place, and exhibition names in the four sample cases have been replaced with neutral labels. Local filesystem paths and platform cache files are omitted.
