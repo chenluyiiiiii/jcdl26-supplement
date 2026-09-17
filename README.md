@@ -28,7 +28,7 @@ Sample data for the four case records discussed in the paper:
 - `re-case1_the_archive_set.jsonld`: Linked Art-compatible representation of The Archive as a `Set`.
 - `re-case2_gwaa_ceoi_instructional_video.jsonld`: Linked Art-compatible representation of an instructional video case as a `DigitalObject`.
 - `re-case3_sei_moon_baak_daa_mocap_animation.jsonld`: Linked Art-compatible representation of a motion-capture-derived animation case as a `DigitalObject`.
-- `re-case4_anonymous_exhibition.jsonld`: Linked Art-compatible representation of an exhibition case as an `Event`.
+- `re-case4_300_years_hakka_kung_fu_exhibition.jsonld`: Linked Art-compatible representation of an exhibition case as an `Event`.
 - `catalog-v001.xml`: XML catalog for resolving ontology IRIs without local absolute paths.
 
 ### `converter/`
