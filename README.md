@@ -4,7 +4,7 @@ Supplementary materials for:
 
 **From Media Records to Knowledge Graph: Interoperable Ontology Modeling for a Multimodal Martial Arts Archive**
 
-This repository provides the sample case data, conversion toolkit, and ontology metrics referenced in the paper. The materials are organized around three parts of the study: sample instantiation for The Archive, conversion from MAon-DAExt instances to Linked Art-compatible JSON-LD, and ontology metric reporting.
+This repository provides the sample case data, conversion toolkit, and ontology metrics referenced in the paper. The materials are organized around three parts of the study: sample instantiation for the Hong Kong Martial Arts Living Archive (HKMALA), conversion from MAon-DAExt instances to Linked Art-compatible JSON-LD, and ontology metric reporting.
 
 ## Repository Contents
 
@@ -16,7 +16,7 @@ The ontology and individual resources are maintained externally and are availabl
 
 - [MAon ontology (MAon.ttl)](https://purl.org/maont/ontology)
 - [MAon individual registry (MAon_individual.ttl)](http://purl.org/maont/ontology_individual)
-- [Digital Archive Extension (MAon_DAExt.ttl)](http://purl.org/hkmala/ontology/maon-daext)))
+- [Digital Archive Extension (MAon_DAExt.ttl)](https://purl.org/hkmala/ontology/maon-daext)
 
 This repository provides supplementary case data, conversion code, and ontology metrics.
 
@@ -25,7 +25,7 @@ This repository provides supplementary case data, conversion code, and ontology 
 Sample data for the four case records discussed in the paper:
 
 - `sample_archive_instances_revision.ttl`: Turtle sample instances used as converter input.
-- `re-case1_the_archive_set.jsonld`: Linked Art-compatible representation of The Archive as a `Set`.
+- `re-case1_hkmala_archive_set.jsonld`: Linked Art-compatible representation of HKMALA as a `Set`.
 - `re-case2_gwaa_ceoi_instructional_video.jsonld`: Linked Art-compatible representation of an instructional video case as a `DigitalObject`.
 - `re-case3_sei_moon_baak_daa_mocap_animation.jsonld`: Linked Art-compatible representation of a motion-capture-derived animation case as a `DigitalObject`.
 - `re-case4_300_years_hakka_kung_fu_exhibition.jsonld`: Linked Art-compatible representation of an exhibition case as an `Event`.
