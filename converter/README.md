@@ -1,6 +1,6 @@
 # MAon-DAExt to Linked Art Converter
 
-Converts [MAon-DAExt]((http://purl.org/hkmala/ontology/maon-daext)) OWL instance files (Turtle) to Linked Art JSON-LD.
+Converts [MAon-DAExt](http://purl.org/hkmala/ontology/maon-daext) OWL instance files (Turtle) to Linked Art JSON-LD.
 
 **MAon Digital Archive Extension for a digital martial arts archive (MAon-DAExt)** is a provisional digital archive extension of MAon for modelling digital martial arts archive-level entities, digital documents, moving-image resources, motion-capture-derived outputs, textual records, installations, exhibitions, agents, and file-level relations for Linked Art alignment. It imports [MAon](https://purl.org/maont/ontology) and adds a file/archive layer for a digital martial arts archive.
 
