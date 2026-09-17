@@ -38,7 +38,7 @@ One JSON-LD record per `owl:NamedIndividual` with a recognised class, using the 
 |---|---|
 | `hda:Digital_Archive` | `Set` |
 | `hda:Exhibition` | `Event` |
-| `hda:Instructional_video`, `hda:MoCap_animation`, `hda:MoCap_item`, `hda:Interactive_system`, `hda:Digital_Learning_Platform` | `DigitalObject` |
+| `hda:Instructional_video`, `hda:MoCap_animation`, `hda:MoCap_item`, `hda:New_media_installation`, `hda:Digital_Learning_Platform` | `DigitalObject` |
 | `hda:Programme` | `Activity` |
 | `hda:Agent` | `Person` or `Group` (name heuristic) |
 | `mao:MA_master` | `Person` |
