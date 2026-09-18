@@ -15,7 +15,7 @@
   ],
   "classified_as": [
     {
-      "id": "https://purl.org/hkmala/ontology/maon-daext#MoCap_animation",
+      "id": "https://purl.org/maont/daext/MoCap_animation",
       "type": "Type",
       "_label": "MoCap_animation"
     }
