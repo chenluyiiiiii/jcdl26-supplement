@@ -98,7 +98,7 @@
     font-size: 12px;
   }
   .drop-zone:hover, .drop-zone.over { border-color: #6366f1; background: #eef2ff; color: #6366f1; }
-  .drop-zone input[type=file] { display: none; }
+  #file-input { display: none; }
 
   /* ── Buttons ──────────────────────────────────── */
   .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
@@ -280,13 +280,13 @@
       <span class="badge">Step 1</span>
     </div>
 
-    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
-      <input type="file" id="file-input" accept=".ttl,.n3,.rdf" />
-      <strong>Click to upload</strong> a .ttl file, or drag &amp; drop it here
+    <input type="file" id="file-input" accept=".ttl,.n3,.rdf" />
+    <div class="drop-zone" id="drop-zone">
+      <span id="drop-zone-label"><strong>Click to upload</strong> a .ttl file, or drag &amp; drop it here</span>
     </div>
 
     <textarea id="ttl-input" rows="14"
-      placeholder="@prefix hda: <https://purl.org/hkmala/ontology/maon-daext#> .
+      placeholder="@prefix hda: <https://purl.org/maont/daext/> .
 @prefix mao: <https://purl.org/maont/ontology/> .
 ...paste your Turtle instance file here..."></textarea>
 
@@ -436,7 +436,10 @@ function setStep(n) {
 
 // ── File upload / drag-drop ────────────────────────────────────
 const dropZone = document.getElementById("drop-zone");
+const dropZoneLabel = document.getElementById("drop-zone-label");
 const fileInput = document.getElementById("file-input");
+
+dropZone.addEventListener("click", () => fileInput.click());
 
 dropZone.addEventListener("dragover", e => { e.preventDefault(); dropZone.classList.add("over"); });
 dropZone.addEventListener("dragleave", () => dropZone.classList.remove("over"));
@@ -446,14 +449,19 @@ dropZone.addEventListener("drop", e => {
   if (file) loadFile(file);
 });
 fileInput.addEventListener("change", () => {
-  if (fileInput.files[0]) loadFile(fileInput.files[0]);
+  const file = fileInput.files[0];
+  fileInput.value = "";          // allow re-selecting the same file
+  if (file) loadFile(file);
 });
 
 function loadFile(file) {
   const reader = new FileReader();
   reader.onload = e => {
     document.getElementById("ttl-input").value = e.target.result;
-    dropZone.innerHTML = `<strong>${file.name}</strong> loaded ✓`;
+    dropZoneLabel.textContent = "";
+    const nameEl = document.createElement("strong");
+    nameEl.textContent = file.name;
+    dropZoneLabel.append(nameEl, " loaded \u2713");
   };
   reader.readAsText(file);
 }
@@ -486,7 +494,7 @@ document.getElementById("btn-clear").addEventListener("click", () => {
   document.getElementById("ttl-input").value = "";
   document.getElementById("agent-section").style.display = "none";
   document.getElementById("results-section").style.display = "none";
-  dropZone.innerHTML = `<strong>Click to upload</strong> a .ttl file, or drag &amp; drop it here`;
+  dropZoneLabel.innerHTML = `<strong>Click to upload</strong> a .ttl file, or drag &amp; drop it here`;
   hideStatus();
   setStep(1);
 });
