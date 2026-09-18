@@ -11,7 +11,7 @@
   ],
   "classified_as": [
     {
-      "id": "https://purl.org/hkmala/ontology/maon-daext#Exhibition",
+      "id": "https://purl.org/maont/daext/Exhibition",
       "type": "Type",
       "_label": "Exhibition"
     },
