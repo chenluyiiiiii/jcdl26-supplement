@@ -15,7 +15,7 @@
   ],
   "classified_as": [
     {
-      "id": "https://purl.org/hkmala/ontology/maon-daext#Instructional_video",
+      "id": "https://purl.org/maont/daext/Instructional_video",
       "type": "Type",
       "_label": "Instructional_video"
     }
@@ -44,7 +44,7 @@
       "_label": "MAETP Programme",
       "classified_as": [
         {
-          "id": "https://purl.org/hkmala/ontology/maon-daext#Programme",
+          "id": "https://purl.org/maont/daext/Programme",
           "type": "Type",
           "_label": "Programme"
         }
