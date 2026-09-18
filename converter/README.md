@@ -41,7 +41,7 @@ One JSON-LD record per `owl:NamedIndividual` with a recognised class, using the 
 | `hda:Instructional_video`, `hda:MoCap_animation`, `hda:MoCap_item`, `hda:Interactive_system`, `hda:Digital_Learning_Platform` | `DigitalObject` |
 | `hda:Programme` | `Activity` |
 | `hda:Agent` | `Person` or `Group` (name heuristic) |
-| `mao:MA_Master` | `Person` |
+| `mao:MA_master` | `Person` |
 | `mao:E53_place` | `Place` |
 
 ## Overriding agent types
