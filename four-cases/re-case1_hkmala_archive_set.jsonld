@@ -15,7 +15,7 @@
   ],
   "classified_as": [
     {
-      "id": "https://purl.org/hkmala/ontology/maon-daext#Digital_Archive",
+      "id": "https://purl.org/maont/daext/Digital_Archive",
       "type": "Type",
       "_label": "Digital_Archive"
     }
