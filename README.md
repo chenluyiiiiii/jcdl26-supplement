@@ -15,8 +15,8 @@ For access to MAon data and the query interface, visit the [MAon resource page](
 The ontology and individual resources are maintained externally and are available through the following persistent URLs:
 
 - [MAon ontology (MAon.ttl)](https://purl.org/maont/ontology)
-- [MAon individual registry (MAon_individual.ttl)](http://purl.org/maont/ontology_individual)
-- [Digital Archive Extension (MAon_DAExt.ttl)](https://purl.org/hkmala/ontology/maon-daext)
+- [MAon individual registry (MAon_individual.ttl)](https://purl.org/maont/ontology_individual)
+- [Digital Archive Extension (MAon_DAExt.ttl)](https://purl.org/maont/daext)
 
 This repository provides supplementary case data, conversion code, and ontology metrics.
 
