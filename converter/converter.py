@@ -19,13 +19,13 @@ from rdflib import Graph, Namespace, RDF, RDFS, OWL, Literal, URIRef
 from rdflib.namespace import XSD, SKOS
 
 # ── Namespaces ────────────────────────────────────────────────────────────────
-HDA    = Namespace("https://purl.org/hkmala/ontology/maon-daext#")
+HDA    = Namespace("https://purl.org/maont/daext/")
 MAO    = Namespace("https://purl.org/maont/ontology/")
 
 # Legacy/provisional namespace accepted for backwards compatibility.
 HDA_LEGACY_BASES = (
-    "https://purl.org/maont/daext/",
     "http://purl.org/maont/daext/",
+    "https://purl.org/hkmala/ontology/maon-daext#",
     "http://purl.org/hkmala/ontology/maon-daext#",
     "https://purl.org/hkmala/ontology/maon-daext/",
     "http://purl.org/hkmala/ontology/maon-daext/",
@@ -73,13 +73,17 @@ AAT_EXHIBITIONS = "http://vocab.getty.edu/aat/300054766"
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
-def _normalise_hda_aliases(g: Graph) -> None:
-    """Add canonical MAon-DAExt triples for known legacy namespace aliases.
+def _normalise_hda_aliases(g: Graph) -> Graph:
+    """Rewrite known legacy MAon-DAExt namespace aliases onto the canonical one.
 
     This keeps old supplementary/example TTL files convertible while emitting
     records classified with the current MAon-DAExt namespace.
+
+    Triples are rewritten into a fresh graph in document order rather than
+    appended to the existing one. Multi-valued properties are serialised in
+    graph insertion order, so rewriting in place would make a legacy file and
+    its canonical equivalent produce the same records in different orders.
     """
-    additions = []
 
     def canon(term):
         if not isinstance(term, URIRef):
@@ -90,12 +94,12 @@ def _normalise_hda_aliases(g: Graph) -> None:
                 return URIRef(str(HDA) + text[len(base):])
         return term
 
-    for subj, pred, obj in list(g):
-        cs, cp, co = canon(subj), canon(pred), canon(obj)
-        if (cs, cp, co) != (subj, pred, obj):
-            additions.append((cs, cp, co))
-    for triple in additions:
-        g.add(triple)
+    out = Graph()
+    for prefix, uri in g.namespaces():
+        out.bind(prefix, uri, replace=True)
+    for subj, pred, obj in g:
+        out.add((canon(subj), canon(pred), canon(obj)))
+    return out
 
 def _is_org_name(name: str) -> bool:
     nl = name.lower()
@@ -574,7 +578,7 @@ def convert_ttl(
     """
     g = Graph()
     g.parse(data=ttl_content, format="turtle")
-    _normalise_hda_aliases(g)
+    g = _normalise_hda_aliases(g)
 
     records: list[dict] = []
     for uri in g.subjects(RDF.type, OWL.NamedIndividual):
@@ -611,7 +615,7 @@ def detect_individuals(ttl_content: str) -> dict[str, list[dict]]:
     """
     g = Graph()
     g.parse(data=ttl_content, format="turtle")
-    _normalise_hda_aliases(g)
+    g = _normalise_hda_aliases(g)
 
     buckets: dict[str, list[dict]] = {}
 
