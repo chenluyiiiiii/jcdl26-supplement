@@ -8,91 +8,45 @@ Converts [MAon-DAExt](https://purl.org/maont/daext) OWL instance files (Turtle) 
 
 Python 3.10+
 
-From the `converter/` directory:
-
-```bash
-cd converter
-pip install -r requirements.txt
+```
+pip install rdflib
 ```
 
-Manual dependency installation is optional when using `run.py`, which checks for required packages and installs missing dependencies automatically.
-
 ## Web UI
-
-From the `converter/` directory:
 
 ```bash
 python run.py
 ```
 
-The launcher starts the local Flask server and opens:
-
-```text
-http://localhost:5050
-```
-
-The workflow has three steps:
-
-1. Paste or upload Turtle instance data.
-2. Review automatically detected agent types.
-3. Convert and download the Linked Art-compatible JSON-LD records.
-
-The HTML file is not a standalone static application. It calls the local Flask endpoints `/preview` and `/convert`. Do not open `index.html` directly; launch the interface with `python run.py` and use `http://localhost:5050`.
+Installs dependencies if missing, starts the server, and opens `http://localhost:5050` automatically. Three steps: paste/upload TTL → review agent types → convert and download.
 
 ## CLI
 
-From the `converter/` directory:
-
 ```bash
-# Convert the supplied demonstration dataset and print records as JSONL
-python converter.py ../four-cases/sample_archive_instances_revision.ttl
-
-# Convert another Turtle instance file
+# Print all records as JSONL to stdout
 python converter.py instances.ttl
 
-# Write one .jsonld file per converted resource into a folder
+# Write one .jsonld file per resource into a folder
 python converter.py instances.ttl output/
 ```
 
 ## Output
 
-The converter produces one JSON-LD record for each recognised `owl:NamedIndividual`, using the Linked Art v1 context:
-
-```text
-https://linked.art/ns/v1/linked-art.json
-```
+One JSON-LD record per `owl:NamedIndividual` with a recognised class, using the Linked Art v1 context (`https://linked.art/ns/v1/linked-art.json`).
 
 | TTL class | Linked Art type |
 |---|---|
 | `hda:Digital_Archive` | `Set` |
 | `hda:Exhibition` | `Event` |
-| `hda:Instructional_video` | `DigitalObject` |
-| `hda:MoCap_animation` | `DigitalObject` |
-| `hda:MoCap_item` | `DigitalObject` |
-| `hda:Interactive_system` / `hda:New_media_installation` | `DigitalObject` |
-| `hda:Digital_Learning_Platform` | `DigitalObject` |
+| `hda:Instructional_video`, `hda:MoCap_animation`, `hda:MoCap_item`, `hda:Interactive_system`, `hda:Digital_Learning_Platform` | `DigitalObject` |
 | `hda:Programme` | `Activity` |
-| `hda:Agent` | `Person` or `Group` |
-| `mao:MA_master` | `Person` |
+| `hda:Agent` | `Person` or `Group` (name heuristic) |
+| `mao:MA_Master` | `Person` |
 | `mao:E53_place` | `Place` |
-| `mao:MA_style` | `Type` |
-| `mao:MA_technique` | `Type` |
-| `mao:Form_move` | `Type` |
-
-For `hda:Agent`, the converter initially distinguishes `Person` and `Group` using a name-keyword heuristic. The detected type can be reviewed and changed in the Web UI or overridden programmatically.
 
 ## Overriding agent types
 
-When using the converter as a Python module, pass a dictionary of `{uri: "Person"|"Group"}` to `convert_ttl()`:
+Pass a dict of `{uri: "Person"|"Group"}` to `convert_ttl()` when using the module directly:
 
 ```python
 from converter import convert_ttl
-
-with open("instances.ttl", encoding="utf-8") as f:
-    records = convert_ttl(
-        f.read(),
-        agent_type_overrides={
-            "https://hkmala.org/resource/hing_chao": "Person"
-        }
-    )
-```
