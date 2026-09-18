@@ -1,10 +1,8 @@
 # MAon-DAExt to Linked Art Converter
 
-Converts MAon-DAExt OWL instance files (Turtle) to Linked Art JSON-LD.
+Converts [MAon-DAExt](https://purl.org/maont/daext) OWL instance files (Turtle) to Linked Art JSON-LD.
 
-MAon Digital Archive Extension for HKMALA (MAon-DAExt) is a provisional digital archive extension of MAon for modelling HKMALA archive-level entities, digital documents, moving-image resources, motion-capture-derived outputs, textual records, installations, exhibitions, agents, and file-level relations for Linked Art alignment. It imports MAon and adds a file/archive layer for HKMALA.
-
-
+**MAon Digital Archive Extension for HKMALA (MAon-DAExt)** is a provisional digital archive extension of MAon for modelling HKMALA archive-level entities, digital documents, moving-image resources, motion-capture-derived outputs, textual records, installations, exhibitions, agents, and file-level relations for Linked Art alignment. It imports [MAon](https://purl.org/maont/ontology) and adds a file/archive layer for HKMALA.
 
 ## Requirements
 
