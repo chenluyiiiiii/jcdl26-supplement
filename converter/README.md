@@ -42,7 +42,10 @@ One JSON-LD record per `owl:NamedIndividual` with a recognised class, using the 
 | `hda:Programme` | `Activity` |
 | `hda:Agent` | `Person` or `Group` (name heuristic) |
 | `mao:MA_master` | `Person` |
+| `mao:MA_style`, `mao:MA_technique`, `mao:Form_move`, `mao:Form_set` | `Type` |
 | `mao:E53_place` | `Place` |
+
+For a form such as Sei Moon Baak Daa, the sample uses `hda:documents` rather than `hda:documentsTechnique`. The converter recognises a documented `mao:Form_set` in its generated content description; domain-specific relations remain in the Turtle source.
 
 ## Overriding agent types
 
