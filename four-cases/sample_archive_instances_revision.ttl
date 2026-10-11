@@ -185,7 +185,7 @@ hres:mocap_animation_sei_moon_baak_daa_output_v2 rdf:type owl:NamedIndividual ,
                                                                hres:tobias_gremmler ;
                                                  hda:derivedFrom hres:mocap_data_sei_moon_baak_daa ;
                                                  hda:documentsStyle hres:hakka_kung_fu ;
-                                                 hda:documentsTechnique hres:sei_moon_baak_daa ;
+                                                 hda:documents hres:sei_moon_baak_daa ;
                                                  hda:featuresMaster hres:oscar_lam ;
                                                  hda:memberOfArchive hres:hkmala ;
                                                  hda:shownAt hres:exhibition_300_years_hakka_kung_fu ;
@@ -201,7 +201,7 @@ hres:mocap_animation_sei_moon_baak_daa_output_v2 rdf:type owl:NamedIndividual ,
 hres:mocap_data_sei_moon_baak_daa rdf:type owl:NamedIndividual ,
                                            hda:MoCap_item ;
                                   hda:documentsStyle hres:hakka_kung_fu ;
-                                  hda:documentsTechnique hres:sei_moon_baak_daa ;
+                                  hda:documents hres:sei_moon_baak_daa ;
                                   hda:featuresMaster hres:oscar_lam ;
                                   hda:memberOfArchive hres:hkmala ;
                                   hda:hasDuration "0:44" ;
@@ -260,8 +260,7 @@ hres:sarah_kenderdine rdf:type owl:NamedIndividual ,
 
 ###  https://hkmala.org/resource/sei_moon_baak_daa
 hres:sei_moon_baak_daa rdf:type owl:NamedIndividual ,
-                                mao:Form_move ,
-                                mao:MA_technique ;
+                                mao:Form_set ;
                        rdfs:label "sei_moon_baak_daa" ;
                        mao:name_en "Sei Moon Baak Daa"@en ;
                        mao:name_zh "四門逼打"@zh-hk .
