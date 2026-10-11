@@ -51,6 +51,7 @@ CLASS_TO_LA_TYPE: dict[str, str] = {
     str(MAO.MA_style):               "Type",
     str(MAO.MA_technique):           "Type",
     str(MAO.Form_move):              "Type",
+    str(MAO.Form_set):               "Type",
     str(MAO.E53_place):              "Place",
 }
 
@@ -314,20 +315,27 @@ def _common_digital(g: Graph, uri: URIRef, rec: dict):
 
 
 def _content_description(g: Graph, uri: URIRef, rec: dict):
-    """Auto-generate content description from style/technique/master triples."""
+    """Auto-generate content description from domain and practitioner links."""
     style     = g.value(uri, HDA.documentsStyle)
     technique = g.value(uri, HDA.documentsTechnique)
+    form      = next((obj for obj in g.objects(uri, HDA.documents)
+                      if (obj, RDF.type, MAO.Form_set) in g), None)
     master    = g.value(uri, HDA.featuresMaster)
-    parts: list[str] = []
+    topics: list[str] = []
     if style:
-        parts.append(f"documenting {_label(g, style)}")
+        topics.append(_label(g, style))
     if technique:
-        parts.append(f"and the {_label(g, technique)} technique")
+        topics.append(f"the {_label(g, technique)} technique")
+    if form:
+        topics.append(f"the {_label(g, form)} form")
+    sentence = "This digital object"
+    if topics:
+        sentence += " documents " + " and ".join(topics)
     if master:
-        parts.append(f"featuring {_label(g, master)}")
-    if parts:
+        sentence += (", and" if topics else "") + f" features {_label(g, master)}"
+    if topics or master:
         rec.setdefault("referred_to_by", []).append(
-            _desc("This digital object " + ", ".join(parts) + ".")
+            _desc(sentence + ".")
         )
 
 
